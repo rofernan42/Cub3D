@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/04 17:50:48 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/04 18:37:45 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct	s_cub3d
 	int			sl;
 	int			map_x;
 	int			map_y;
-	int			pos_x;
-	int			pos_y;		//x and y start position
+	double		pos_x;
+	double		pos_y;		//x and y start position
 	double		dir_x;
 	double		dir_y;		//initial direction vector
 	double		plane_x;

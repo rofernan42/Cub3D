@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/04 17:57:33 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/04 18:42:33 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int press_key(int key, t_cub3d *cub)
 		cub->left = 1;
 	if (key == 124 || key == 2)
 		cub->right = 1;
+	if (key == 48)
+		cub->move_speed = 0.12;
 	return (0);
 }
 
@@ -77,6 +79,8 @@ int real_key(int key, t_cub3d *cub)
 		cub->left = 0;
 	if (key == 124 || key == 2)
 		cub->right = 0;
+	if (key == 48)
+		cub->move_speed = 0.05;
 	return (0);
 }
 
@@ -199,7 +203,25 @@ void	raycasting(t_cub3d *cub)
 	mlx_destroy_image(cub->mlx_ptr, cub->image);
 }
 
-int		turn(t_cub3d *cub)
+void	move(t_cub3d *cub)
+{
+	if (cub->up == 1)
+	{
+		if (worldMap[(int)(cub->pos_x + cub->dir_x * cub->move_speed)][(int)(cub->pos_y)] == 0)
+			cub->pos_x += cub->dir_x * cub->move_speed;
+		if (worldMap[(int)(cub->pos_x)][(int)(cub->pos_y + cub->dir_y * cub->move_speed)] == 0)
+			cub->pos_y += cub->dir_y * cub->move_speed;
+	}
+	if (cub->down == 1)
+	{
+		if (worldMap[(int)(cub->pos_x - cub->dir_x * cub->move_speed)][(int)(cub->pos_y)] == 0)
+			cub->pos_x -= cub->dir_x * cub->move_speed;
+		if (worldMap[(int)(cub->pos_x)][(int)(cub->pos_y - cub->dir_y * cub->move_speed)] == 0)
+			cub->pos_y -= cub->dir_y * cub->move_speed;
+	}
+}
+
+void	turn(t_cub3d *cub)
 {
 	if (cub->left == 1)
     {
@@ -219,6 +241,12 @@ int		turn(t_cub3d *cub)
 		cub->plane_x = cub->plane_x * cos(-cub->rot_speed) - cub->plane_y * sin(-cub->rot_speed);
 		cub->plane_y = cub->oldplane_x * sin(-cub->rot_speed) + cub->plane_y * cos(-cub->rot_speed);
     }
+}
+
+int		motion(t_cub3d *cub)
+{
+	move(cub);
+	turn(cub);
 	raycasting(cub);
 	return (0);
 }
@@ -239,6 +267,6 @@ int	main()
 	mlx_hook(cub.win_ptr, 3, (1L<<1), real_key, &cub);
 	init_cub(&cub);
 	raycasting(&cub);
-	mlx_loop_hook(cub.mlx_ptr, turn, &cub);
+	mlx_loop_hook(cub.mlx_ptr, motion, &cub);
 	mlx_loop(cub.mlx_ptr);
 }
