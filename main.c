@@ -6,13 +6,11 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/04 15:02:33 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/04 17:57:33 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-#define ABS(x) (x < 0) ? -x : x
 
 int		exit_prog(void)
 {
@@ -20,7 +18,7 @@ int		exit_prog(void)
 	return (0);
 }
 
-int	read_desc(int fd, t_win *win)
+int	read_desc(int fd, t_cub3d *cub)
 {
 	char	*line;
 	int		ret;
@@ -34,12 +32,12 @@ int	read_desc(int fd, t_win *win)
 		if (line[0] == 'R')
 		{
 			i = 1;
-			win->res_x = ft_atoi(&line[1]);
+			cub->res_x = ft_atoi(&line[1]);
 			while (line[i] && line[i] == ' ')
 				i++;
 			while (line[i] && (line[i] >= '0' && line[i] <= '9'))
 				i++;
-			win->res_y = ft_atoi(&line[i]);
+			cub->res_y = ft_atoi(&line[i]);
 		}
 		free(line);
 	}
@@ -56,57 +54,31 @@ int	read_desc(int fd, t_win *win)
 	return (1);
 }
 
-int deal_key(int key, t_win *win)
+int press_key(int key, t_cub3d *cub)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	if (key == 0)
-	{
-	while (i < 300)
-	{
-		j = 0;
-		while (j < 200)
-		{
-			mlx_pixel_put(win->mlx_ptr, win->win_ptr, i, j, 0x32cd32);
-			j++;
-		}
-		i++;
-	}
-	}
+	if (key == 126 || key == 13)
+		cub->up = 1;
+	if (key == 125 || key == 1)
+		cub->down = 1;
+	if (key == 123 || key == 0)
+		cub->left = 1;
+	if (key == 124 || key == 2)
+		cub->right = 1;
 	return (0);
 }
 
-int real_key(int key, t_win *win)
+int real_key(int key, t_cub3d *cub)
 {
-	int i;
-	int j;
-
-	i = 0;
-	j = 0;
-	if (key == 0)
-	{
-	while (i < 300)
-	{
-		j = 0;
-		while (j < 200)
-		{
-			mlx_pixel_put(win->mlx_ptr, win->win_ptr, i, j, 0x000000);
-			j++;
-		}
-		i++;
-	}
-	}
+	if (key == 126 || key == 13)
+		cub->up = 0;
+	if (key == 125 || key == 1)
+		cub->down = 0;
+	if (key == 123 || key == 0)
+		cub->left = 0;
+	if (key == 124 || key == 2)
+		cub->right = 0;
 	return (0);
 }
-
-void	draw_wall()
-{
-	
-}
-
 
 #define mapWidth 10
 #define mapHeight 10
@@ -125,154 +97,148 @@ int worldMap[mapWidth][mapHeight]=
   {1,1,1,1,1,1,1,1,1,1}
 };
 
+void	init_cub(t_cub3d *cub)
+{
+	cub->pos_x = 6;
+	cub->pos_y = 3;
+	cub->dir_x = 0;
+	cub->dir_y = 1;
+	cub->plane_x = 0.66;
+	cub->plane_y = 0;
+	cub->time = 0;
+	cub->prev_time = 0;
+	cub->move_speed = 0.05;
+	cub->rot_speed = 0.05;
+	cub->up = 0;
+	cub->down = 0;
+	cub->left = 0;
+	cub->right = 0;
+}
 
+void	raycasting(t_cub3d *cub)
+{
+	int x;
+	int y;
+	int color;
+
+	x = 0;
+	cub->image = mlx_new_image(cub->mlx_ptr, cub->res_x, cub->res_y);
+	cub->img_ptr = mlx_get_data_addr(cub->image, &cub->bpp, &cub->sl, &cub->endian);
+	while (x < cub->res_x)
+    {
+		cub->cam_plane = (double)(2 * x / (double)cub->res_x) - 1;
+		cub->raydir_x = cub->dir_x + cub->plane_x * cub->cam_plane;
+		cub->raydir_y = cub->dir_y + cub->plane_y * cub->cam_plane;
+		cub->map_x = cub->pos_x;
+		cub->map_y = cub->pos_y;
+		cub->delta_dx = fabs(1 / cub->raydir_x);
+		cub->delta_dy = fabs(1 / cub->raydir_y);
+		if (cub->raydir_x < 0)
+		{
+			cub->step_x = -1;
+			cub->side_dx = (cub->pos_x - cub->map_x) * cub->delta_dx;
+		}
+		else
+		{
+			cub->step_x = 1;
+			cub->side_dx = (cub->map_x + 1.0 - cub->pos_x) * cub->delta_dx;
+		}
+		if (cub->raydir_y < 0)
+		{
+			cub->step_y = -1;
+			cub->side_dy = (cub->pos_y - cub->map_y) * cub->delta_dy;
+		}
+		else
+		{
+			cub->step_y = 1;
+			cub->side_dy = (cub->map_y + 1.0 - cub->pos_y) * cub->delta_dy;
+		}
+		cub->wall_hit = 0;
+		while (cub->wall_hit == 0)
+		{
+			if (cub->side_dx < cub->side_dy)
+			{
+				cub->side_dx = cub->side_dx + cub->delta_dx;
+				cub->map_x = cub->map_x + cub->step_x;
+				cub->side = 0;
+			}
+			else
+			{
+				cub->side_dy = cub->side_dy + cub->delta_dy;
+				cub->map_y = cub->map_y + cub->step_y;
+				cub->side = 1;
+			}
+			if (worldMap[cub->map_x][cub->map_y] > 0)
+				cub->wall_hit = 1;
+		}
+		if (cub->side == 0)
+			cub->wall_dist = (cub->map_x - cub->pos_x + (1 - cub->step_x) / 2) / cub->raydir_x;
+		else
+			cub->wall_dist = (cub->map_y - cub->pos_y + (1 - cub->step_y) / 2) / cub->raydir_y;
+		cub->line_height = (int)(cub->res_y / cub->wall_dist);
+		cub->draw_start = -cub->line_height / 2 + cub->res_y / 2;
+		if(cub->draw_start < 0)
+			cub->draw_start = 0;
+		cub->draw_end = cub->line_height / 2 + cub->res_y / 2;
+		if(cub->draw_end >= cub->res_y)
+			cub->draw_end = cub->res_y - 1;
+		y = cub->draw_start;
+		if (cub->side == 0)
+			color = 0x318E29;
+		else if (cub->side == 1)
+			color = 0x31C724;
+		while (y < cub->draw_end)
+		{
+			if (x < cub->res_x && y < cub->res_y)
+			ft_memcpy(cub->img_ptr + 4 * cub->res_x * y + x * 4, &color, sizeof(int));
+			y++;
+		}
+		x++;
+	}
+	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->image, 0, 0);
+	mlx_destroy_image(cub->mlx_ptr, cub->image);
+}
+
+int		turn(t_cub3d *cub)
+{
+	if (cub->left == 1)
+    {
+		cub->olddir_x = cub->dir_x;
+		cub->dir_x = cub->dir_x * cos(cub->rot_speed) - cub->dir_y * sin(cub->rot_speed);
+		cub->dir_y = cub->olddir_x * sin(cub->rot_speed) + cub->dir_y * cos(cub->rot_speed);
+		cub->oldplane_x = cub->plane_x;
+		cub->plane_x = cub->plane_x * cos(cub->rot_speed) - cub->plane_y * sin(cub->rot_speed);
+		cub->plane_y = cub->oldplane_x * sin(cub->rot_speed) + cub->plane_y * cos(cub->rot_speed);
+    }
+	if (cub->right == 1)
+    {
+		cub->olddir_x = cub->dir_x;
+		cub->dir_x = cub->dir_x * cos(-cub->rot_speed) - cub->dir_y * sin(-cub->rot_speed);
+		cub->dir_y = cub->olddir_x * sin(-cub->rot_speed) + cub->dir_y * cos(-cub->rot_speed);
+		cub->oldplane_x = cub->plane_x;
+		cub->plane_x = cub->plane_x * cos(-cub->rot_speed) - cub->plane_y * sin(-cub->rot_speed);
+		cub->plane_y = cub->oldplane_x * sin(-cub->rot_speed) + cub->plane_y * cos(-cub->rot_speed);
+    }
+	raycasting(cub);
+	return (0);
+}
 
 int	main()
 {
-	t_win win;
-	t_img img;
+	t_cub3d cub;
 	int fd;
 	
 	fd = open("desc.cub", O_RDONLY);
-	read_desc(fd, &win);
+	read_desc(fd, &cub);
 	
-	win.mlx_ptr = mlx_init();
-	win.win_ptr = mlx_new_window(win.mlx_ptr, win.res_x, win.res_y, "cub3d");
-	img.image = mlx_new_image(win.mlx_ptr, win.res_x, win.res_y);
-	img.img_ptr = mlx_get_data_addr(img.image, &img.bpp, &img.sl, &img.endian);
+	cub.mlx_ptr = mlx_init();
+	cub.win_ptr = mlx_new_window(cub.mlx_ptr, cub.res_x, cub.res_y, "cub3d");
 
-	mlx_hook(win.win_ptr, 17, 0L, exit_prog, &win);	/* termine le programme quand on ferme la fenetre */
-	// mlx_hook(win.win_ptr, 2, (1L<<0), deal_key, &win); /* affiche le carre de couleur quand on appuie sur 'a' */
-	// mlx_hook(win.win_ptr, 3, (1L<<1), real_key, &win); /* enleve le carre de couleur quand on relache 'a' */
-	int posX = 6, posY = 3;  //x and y start position
-	double dirX = 0, dirY = 1; //initial direction vector
-	double planeX = 0.66, planeY = 0; //the 2d raycaster version of camera plane
-
-	double time = 0; //time of current frame
-	double oldTime = 0; //time of previous frame
-
-	double cameraX; //x-coordinate in camera space
-    double rayDirX;
-    double rayDirY;
-	int x;
-	x = 0;
-	int mapX;
-	int mapY;
-
-//length of ray from current position to next x or y-side
-	double sideDistX;
-    double sideDistY;
-
-	//length of ray from one x or y-side to next x or y-side
-      double deltaDistX;
-      double deltaDistY;
-      double perpWallDist;
-
-      //what direction to step in x or y-direction (either +1 or -1)
-      int stepX;
-      int stepY;
-
-      int hit = 0; //was there a wall hit?
-      int side; //was a NS or a EW wall hit?
-
-	int lineHeight;
-	int drawStart;
-    int drawEnd;
-
-	int y;
-
-	while (x < win.res_x)
-    {
-      //calculate ray position and direction
-      cameraX = (double)(2 * x / (double)win.res_x) - 1; //x-coordinate in camera space
-      rayDirX = dirX + planeX * cameraX;
-      rayDirY = dirY + planeY * cameraX;
-
-	  //which box of the map we're in
-      mapX = posX;
-      mapY = posY;
-
-    //length of ray from one x or y-side to next x or y-side
-    	deltaDistX = sqrt(1 + (rayDirY * rayDirY) / (rayDirX * rayDirX));
-		deltaDistY = sqrt(1 + (rayDirX * rayDirX) / (rayDirY * rayDirY));
-
-	  if (rayDirX < 0)
-      {
-        stepX = -1;
-        sideDistX = (posX - mapX) * deltaDistX;
-      }
-      else
-      {
-        stepX = 1;
-        sideDistX = (mapX + 1.0 - posX) * deltaDistX;
-      }
-      if (rayDirY < 0)
-      {
-        stepY = -1;
-        sideDistY = (posY - mapY) * deltaDistY;
-      }
-      else
-      {
-        stepY = 1;
-        sideDistY = (mapY + 1.0 - posY) * deltaDistY;
-      }
-
-	hit = 0;
-	//perform DDA
-      while (hit == 0)
-      {
-        //jump to next map square, OR in x-direction, OR in y-direction
-        if (sideDistX < sideDistY)
-        {
-          sideDistX += deltaDistX;
-          mapX += stepX;
-          side = 0;
-        }
-        else
-        {
-          sideDistY += deltaDistY;
-          mapY += stepY;
-          side = 1;
-        }
-        //Check if ray has hit a wall
-        if (worldMap[mapX][mapY] > 0) hit = 1;
-      }
-
-	  if (side == 0) perpWallDist = (mapX - posX + (1 - stepX) / 2) / rayDirX;
-      else           perpWallDist = (mapY - posY + (1 - stepY) / 2) / rayDirY;
-
-
-	//Calculate height of line to draw on screen
-      lineHeight = (int)(win.res_y / perpWallDist);
-
-      //calculate lowest and highest pixel to fill in current stripe
-      drawStart = -lineHeight / 2 + win.res_y / 2;
-      if(drawStart < 0)
-	  	drawStart = 0;
-      drawEnd = lineHeight / 2 + win.res_y / 2;
-      if(drawEnd >= win.res_y)
-	  	drawEnd = win.res_y - 1;
-	y = drawStart;
-	int color;
-	if (side == 0)
-		color = 0x32cd32;
-	else if (side == 1)
-		color = 0xFFFFFF;
-	while (y < drawEnd)
-	{
-		if (x < win.res_x && y < win.res_y)
-			ft_memcpy(img.img_ptr + 4 * win.res_x * y + x * 4,
-				&color, sizeof(int));
-			y++;
-	}
-	// while (y <= drawEnd)
-	// {
-	//   mlx_pixel_put(win.mlx_ptr, win.win_ptr, x, y, color);
-	//   y++;
-	// }
-	x++;
-	}
-	mlx_put_image_to_window(win.mlx_ptr, win.win_ptr, img.image, 0, 0);
-	// mlx_destroy_image(win.mlx_ptr, img.image);
-	mlx_loop(win.mlx_ptr);
+	mlx_hook(cub.win_ptr, 17, 0L, exit_prog, &cub);	/* termine le programme quand on ferme la fenetre */
+	mlx_hook(cub.win_ptr, 2, (1L<<0), press_key, &cub);
+	mlx_hook(cub.win_ptr, 3, (1L<<1), real_key, &cub);
+	init_cub(&cub);
+	raycasting(&cub);
+	mlx_loop_hook(cub.mlx_ptr, turn, &cub);
+	mlx_loop(cub.mlx_ptr);
 }
