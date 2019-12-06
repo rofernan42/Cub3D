@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 17:07:01 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 20:16:37 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,26 @@
 ** -Toutes les fonctions de la lib math (-lm
 ** man man 3 math)
 ** -Toutes les fonctions de la MinilibX
+http://www-igm.univ-mlv.fr/~berstel/Cours/Xlib/13-Evenements.pdf
 */
-
-#define Width 3
-#define Height 3
 
 typedef struct	s_map
 {
 	int			height;
-	int			width;
 	char		*err_message;
 }				t_map;
 
+typedef struct	s_tex
+{
+	char		*tex_n;
+	char		*tex_s;
+	char		*tex_e;
+	char		*tex_w;
+}				t_tex;
 
 typedef struct	s_cub3d
 {
-	char		*map[Width];
+	char		**map;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	int			res_x;
@@ -102,7 +106,14 @@ typedef struct	s_cub3d
 }				t_cub3d;
 
 /*
-** MAP.C
+** CREATE_MAP.C
+*/
+int				count_x(int fd, t_cub3d *cub);
+void			create_map(int fd, t_cub3d *cub, t_map *world);
+void			adjust_map(t_cub3d *cub, t_map *world);
+
+/*
+** CHECK_MAP.C
 */
 int				check_map(t_cub3d *cub, t_map *world);
 
@@ -110,10 +121,10 @@ int				check_map(t_cub3d *cub, t_map *world);
 ** INIT_VAR.C
 */
 void			init_cub(t_cub3d *cub);
-void			init_position(t_cub3d *cub);
+void			init_position(t_cub3d *cub, t_map *world);
 void			init_direction(t_cub3d *cub);
 void			init_plane(t_cub3d *cub);
-void			init_var(t_cub3d *cub);
+void			init_var(t_cub3d *cub, t_map *world);
 
 /*
 ** DRAWING.C
@@ -126,6 +137,12 @@ void			draw_ceiling(t_cub3d *cub, int x);
 ** RAYCASTING.C
 */
 void			raycasting(t_cub3d *cub);
+
+/*
+** ACTIONS.C
+*/
+int				press_key(int key, t_cub3d *cub);
+int				real_key(int key, t_cub3d *cub);
 
 /*
 ** MOTION.C

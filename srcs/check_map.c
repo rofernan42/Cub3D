@@ -1,35 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map.c                                              :+:      :+:    :+:   */
+/*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:36:58 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 16:25:36 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 18:49:26 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** verifications map:
-** - nb lignes >= 3
-** - nb colonnes >= 3
-** - des 1 tout autour du tab OK
-** - verifier qu'il n y a aucun autre symbole que 0, 1, 2, N, S, E, W OK
-** - verifier qu'il y a N ou S ou E ou W sur la map OK
-** - verifier qu'il n y a qu'un seul N,S,E,W sur toute la map OK
-*/
-
 #include "../includes/cub3d.h"
 
-int		check_size(t_cub3d *cub, t_map *world)
+static int	check_size(t_cub3d *cub, t_map *world)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	world->height = Height;
 	if (world->height < 3)
 		return (0);
 	while (x < world->height)
@@ -44,14 +33,13 @@ int		check_size(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-int		check_edges(t_cub3d *cub, t_map *world)
+static int	check_edges(t_cub3d *cub, t_map *world)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	world->height = Height;
 	while (cub->map[0][y] && cub->map[world->height - 1][y])
 	{
 		if (cub->map[0][y] != '1' || cub->map[world->height - 1][y] != '1')
@@ -68,7 +56,7 @@ int		check_edges(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-int		check_inside(t_cub3d *cub, t_map *world)
+static int	check_inside(t_cub3d *cub, t_map *world)
 {
 	int x;
 	int y;
@@ -92,7 +80,7 @@ int		check_inside(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-int		check_position(t_cub3d *cub, t_map *world)
+static int	check_position(t_cub3d *cub, t_map *world)
 {
 	int x;
 	int y;
@@ -118,7 +106,7 @@ int		check_position(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-int		check_map(t_cub3d *cub, t_map *world)
+int			check_map(t_cub3d *cub, t_map *world)
 {
 	if (!(check_size(cub, world)))
 	{
