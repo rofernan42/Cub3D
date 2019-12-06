@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/04 18:37:45 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 16:01:30 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,29 @@
 ** -Toutes les fonctions de la MinilibX
 */
 
+#define Width 10
+#define Height 10
+
+typedef struct	s_map
+{
+	int			height;
+	int			width;
+	char		*err_message;
+}				t_map;
+
+
 typedef struct	s_cub3d
 {
+	char		*map[Width];
 	void		*mlx_ptr;
 	void		*win_ptr;
 	int			res_x;
 	int			res_y;
 	void		*image;
 	void		*img_ptr;
-	int			bpp;
+	int			bit_pix;
+	int			size_line;
 	int			endian;
-	int			sl;
 	int			map_x;
 	int			map_y;
 	double		pos_x;
@@ -79,7 +91,7 @@ typedef struct	s_cub3d
     int			draw_end;
 	double		time;		//time of current frame
 	double		prev_time;	//time of previous frame
-	double		move_speed;
+	double		mov_speed;
 	double		rot_speed;
 	double		olddir_x;
 	double		oldplane_x;
@@ -87,9 +99,38 @@ typedef struct	s_cub3d
 	int			down;
 	int			left;
 	int			right;
-
 }				t_cub3d;
 
+/*
+** MAP.C
+*/
+int				check_map(t_cub3d *cub, t_map *world);
+
+/*
+** INIT_VAR.C
+*/
+void			init_cub(t_cub3d *cub);
+void			init_position(t_cub3d *cub);
+void			init_direction(t_cub3d *cub);
+void			init_plane(t_cub3d *cub);
+void			init_var(t_cub3d *cub);
+
+/*
+** DRAWING.C
+*/
+void			draw_walls(t_cub3d *cub, int x);
+void			draw_floor(t_cub3d *cub, int x);
+void			draw_ceiling(t_cub3d *cub, int x);
+
+/*
+** RAYCASTING.C
+*/
+void			raycasting(t_cub3d *cub);
+
+/*
+** MOTION.C
+*/
+int				motion(t_cub3d *cub);
 
 /*typedef struct	s_tex
 {
