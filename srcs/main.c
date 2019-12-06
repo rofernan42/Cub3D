@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 16:03:59 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:06:55 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,21 +94,26 @@ int	main(void)
 	fd = open("desc.cub", O_RDONLY);
 	read_desc(fd, &cub);
 
-	cub.map[0] = "1111111111";
-	cub.map[1] = "1001111001";
-	cub.map[2] = "1000000001";
-	cub.map[3] = "1000000001";
-	cub.map[4] = "10000N0011";
-	cub.map[5] = "1000000001";
-	cub.map[6] = "1000002001";
-	cub.map[7] = "1100001111";
-	cub.map[8] = "1100001111";
-	cub.map[9] = "1111111111";
+	// cub.map[0] = "1111111111";
+	// cub.map[1] = "1001111001";
+	// cub.map[2] = "1000000001";
+	// cub.map[3] = "1000000001";
+	// cub.map[4] = "10000N0011";
+	// cub.map[5] = "1000000001";
+	// cub.map[6] = "1000002001";
+	// cub.map[7] = "1100001111";
+	// cub.map[8] = "1100001111";
+	// cub.map[9] = "1111111111";
+
+	cub.map[0] = "111";
+	cub.map[1] = "1N1";
+	cub.map[2] = "111";
+
 
 	if (!(check_map(&cub, &world)))
 	{
 		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd("Invalid map\n", 1);
+		ft_putstr_fd(world.err_message, 1);
 		return (0);
 	}
 	cub.mlx_ptr = mlx_init();

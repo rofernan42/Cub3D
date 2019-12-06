@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 16:01:30 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:07:01 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@
 ** -Toutes les fonctions de la MinilibX
 */
 
-#define Width 10
-#define Height 10
+#define Width 3
+#define Height 3
 
 typedef struct	s_map
 {

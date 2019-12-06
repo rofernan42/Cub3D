@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:08:14 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 14:42:27 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 16:45:24 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	draw_walls(t_cub3d *cub, int x)
 		col = 0xE9F00F;
 	while (y < cub->draw_end)
 	{
-		if (x < cub->res_x && y < cub->res_y)
 		ft_memcpy(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
 		y++;
 	}

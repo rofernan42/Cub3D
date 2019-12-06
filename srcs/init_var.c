@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 15:21:47 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/06 17:06:08 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	init_position(t_cub3d *cub)
 
 	x = 0;
 	y = 0;
-	while (x < Width)
+	while (x < Height)
 	{
-		while (y < Height)
+		while (cub->map[x][y])
 		{
 			if (cub->map[x][y] == 'N' || cub->map[x][y] == 'S' \
 			|| cub->map[x][y] == 'E' || cub->map[x][y] == 'W')
@@ -46,6 +46,8 @@ void	init_position(t_cub3d *cub)
 		y = 0;
 		x++;
 	}
+	cub->pos_x = cub->pos_x + 0.5;
+	cub->pos_y = cub->pos_y + 0.5;
 }
 
 void	init_direction(t_cub3d *cub)
