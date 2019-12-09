@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 20:20:52 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:09:04 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ void	assign_res(t_cub3d *cub, char *line)
 
 
 
-void	read_desc(int fd, t_cub3d *cub, t_tex *tex)
+void	read_desc(int fd, t_cub3d *cub)
 {
 	char	*line;
 	int		ret;
 
-	init_textures(tex);
+	init_textures(cub);
 	while ((ret = get_next_line(fd, &line)) && line[0] != '1')
 	{
 		if (line[0])
@@ -57,32 +57,39 @@ void	read_desc(int fd, t_cub3d *cub, t_tex *tex)
 			|| (line[0] == 'S' && line[1] == 'O') \
 			|| (line[0] == 'W' && line[1] == 'E') \
 			|| (line[0] == 'E' && line[1] == 'A'))
-				assign_tex(tex, line);
+			{
+				assign_tex(cub, line);
+				// import_tex(cub);
+			}
 			// if (line[0] == 'S')
 			// if (line[0] == 'F')
 			// if (line[0] == 'C')
 		}
 		free(line);
 	}
-	ft_strdel(&line);
+	while ((ret = get_next_line(fd, &line)))
+		free(line);
+	get_next_line(fd, &line);
+	free(line);
 }
 
-int		init_desc(t_cub3d *cub, t_map *world, t_tex *tex)
+int		init_desc(t_cub3d *cub)
 {
 	int fd;
 
 	fd = open("desc.cub", O_RDONLY);
-	read_desc(fd, cub, tex);
+	read_desc(fd, cub);
 	close(fd);
 	fd = open("desc.cub", O_RDONLY);
-	world->height = count_x(fd, cub);
-	if (!(cub->map = malloc(sizeof(cub->map) * world->height)))
+	count_x(fd, cub);
+	if (!(cub->map = malloc(sizeof(cub->map) * cub->map_h)))
 		return (0);
 	close(fd);
 	fd = open("desc.cub", O_RDONLY);
-	create_map(fd, cub, world);
+	create_map(fd, cub);
 	close(fd);
-	adjust_map(cub, world);
+	adjust_map(cub);
+	complete_map(cub);
 	return (1);
 }
 
@@ -96,29 +103,25 @@ int		check_error(t_cub3d *cub)
 int	main(void)
 {
 	t_cub3d	cub;
-	t_map	world;
 	t_tex	tex;
 
-	init_desc(&cub, &world, &tex);
-
+	init_desc(&cub);
+	printf("%s\n", cub.tex.tex_n);
+	printf("%s\n", cub.tex.image);
+	printf("int %lu    char %lu    char* %lu\n", sizeof(int), sizeof(char), sizeof(char*));
 	// TEMP: affichage map
 	int x = 0;
-	while (x < world.height)
+	while (x < cub.map_h)
 	{
 		printf("%s\n", cub.map[x]);
 		x++;
 	}
 
-	
-	if (!(check_error(&cub)))
+	check_map(&cub);
+	if (cub.error == 1)
 	{
 		ft_putstr_fd("Error\n", 1);
-		return (0);
-	}
-	if (!(check_map(&cub, &world)))
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(world.err_message, 1);
+		ft_putstr_fd(cub.err_message, 1);
 		return (0);
 	}
 	cub.mlx_ptr = mlx_init();
@@ -128,7 +131,7 @@ int	main(void)
 	mlx_hook(cub.win_ptr, 2, (1L<<0), press_key, &cub); /* action quand une touche est pressee */
 	mlx_hook(cub.win_ptr, 3, (1L<<1), real_key, &cub); /* action quand une touche est relachee */
 
-	init_var(&cub, &world);
+	init_var(&cub);
 	// printf("%f  %f\n", cub.pos_x, cub.pos_y);
 	mlx_loop_hook(cub.mlx_ptr, motion, &cub);
 	mlx_loop(cub.mlx_ptr);

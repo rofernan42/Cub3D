@@ -6,22 +6,22 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:36:58 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 18:49:26 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 15:47:47 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static int	check_size(t_cub3d *cub, t_map *world)
+static int	check_size(t_cub3d *cub)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	if (world->height < 3)
+	if (cub->map_h < 3)
 		return (0);
-	while (x < world->height)
+	while (x < cub->map_h)
 	{
 		while (cub->map[x][y])
 			y++;
@@ -33,20 +33,20 @@ static int	check_size(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-static int	check_edges(t_cub3d *cub, t_map *world)
+static int	check_edges(t_cub3d *cub)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	while (cub->map[0][y] && cub->map[world->height - 1][y])
+	while (cub->map[0][y] && cub->map[cub->map_h - 1][y])
 	{
-		if (cub->map[0][y] != '1' || cub->map[world->height - 1][y] != '1')
+		if (cub->map[0][y] != '1' || cub->map[cub->map_h - 1][y] != '1')
 			return (0);
 		y++;
 	}
-	while (x < world->height)
+	while (x < cub->map_h)
 	{
 		if (cub->map[x][0] != '1' \
 			|| cub->map[x][ft_strlen(cub->map[x]) - 1] != '1')
@@ -56,14 +56,14 @@ static int	check_edges(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-static int	check_inside(t_cub3d *cub, t_map *world)
+static int	check_inside(t_cub3d *cub)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	while (x < world->height)
+	while (x < cub->map_h)
 	{
 		while (cub->map[x][y])
 		{
@@ -80,7 +80,7 @@ static int	check_inside(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-static int	check_position(t_cub3d *cub, t_map *world)
+static int	check_position(t_cub3d *cub)
 {
 	int x;
 	int y;
@@ -89,7 +89,7 @@ static int	check_position(t_cub3d *cub, t_map *world)
 	x = 0;
 	y = 0;
 	count = 0;
-	while (x < world->height)
+	while (x < cub->map_h)
 	{
 		while (cub->map[x][y])
 		{
@@ -106,27 +106,30 @@ static int	check_position(t_cub3d *cub, t_map *world)
 	return (1);
 }
 
-int			check_map(t_cub3d *cub, t_map *world)
+void		check_map(t_cub3d *cub)
 {
-	if (!(check_size(cub, world)))
+	if (!(check_size(cub)))
 	{
-		world->err_message = ft_strdup("Map too small.\n");
-		return (0);
+		cub->error = 1;
+		cub->err_message = ft_strdup("Map too small.\n");
+		return ;
 	}
-	if (!(check_edges(cub, world)))
+	if (!(check_edges(cub)))
 	{
-		world->err_message = ft_strdup("Map must be surrounded by 1.\n");
-		return (0);
+		cub->error = 1;
+		cub->err_message = ft_strdup("Map must be surrounded by 1.\n");
+		return ;
 	}
-	if (!(check_inside(cub, world)))
+	if (!(check_inside(cub)))
 	{
-		world->err_message = ft_strdup("Invalid value.\n");
-		return (0);
+		cub->error = 1;
+		cub->err_message = ft_strdup("Invalid value.\n");
+		return ;
 	}
-	if (!(check_position(cub, world)))
+	if (!(check_position(cub)))
 	{
-		world->err_message = ft_strdup("Must have 1 position identifier.\n");
-		return (0);
+		cub->error = 1;
+		cub->err_message = ft_strdup("Must have 1 position identifier.\n");
+		return ;
 	}
-	return (1);
 }

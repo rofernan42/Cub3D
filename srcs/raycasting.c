@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 17:04:52 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 11:57:02 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ static void	tracing(t_cub3d *cub)
 void		raycasting(t_cub3d *cub)
 {
 	int x;
-	int y;
 
 	x = 0;
 	cub->image = mlx_new_image(cub->mlx_ptr, cub->res_x, cub->res_y);
@@ -107,7 +106,6 @@ void		raycasting(t_cub3d *cub)
 		init_dda(cub);
 		dda(cub);
 		tracing(cub);
-		y = cub->draw_start;
 		draw_walls(cub, x);
 		draw_floor(cub, x);
 		draw_ceiling(cub, x);

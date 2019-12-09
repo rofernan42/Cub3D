@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 18:54:41 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 15:46:22 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	init_cub(t_cub3d *cub)
 {
-	cub->time = 0;
-	cub->prev_time = 0;
 	cub->mov_speed = 0.05;
 	cub->rot_speed = 0.05;
 	cub->up = 0;
@@ -24,14 +22,14 @@ void	init_cub(t_cub3d *cub)
 	cub->right = 0;
 }
 
-void	init_position(t_cub3d *cub, t_map *world)
+void	init_position(t_cub3d *cub)
 {
 	int x;
 	int y;
 
 	x = 0;
 	y = 0;
-	while (x < world->height)
+	while (x < cub->map_h)
 	{
 		while (cub->map[x][y])
 		{
@@ -90,10 +88,10 @@ void	init_plane(t_cub3d *cub)
 	}
 }
 
-void	init_var(t_cub3d *cub, t_map *world)
+void	init_var(t_cub3d *cub)
 {
 	init_cub(cub);
-	init_position(cub, world);
+	init_position(cub);
 	init_direction(cub);
 	init_plane(cub);
 }

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 20:16:37 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 16:09:15 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,18 @@ typedef struct	s_tex
 	char		*tex_s;
 	char		*tex_e;
 	char		*tex_w;
+	void		*image;
+	void		*img_ptr;
+	int			bit_pix;
+	int			size_line;
+	int			endian;
 }				t_tex;
 
 typedef struct	s_cub3d
 {
 	char		**map;
+	int			map_h;
+	int			map_w;
 	void		*mlx_ptr;
 	void		*win_ptr;
 	int			res_x;
@@ -93,8 +100,6 @@ typedef struct	s_cub3d
 	int			line_height;
 	int			draw_start;
     int			draw_end;
-	double		time;		//time of current frame
-	double		prev_time;	//time of previous frame
 	double		mov_speed;
 	double		rot_speed;
 	double		olddir_x;
@@ -103,28 +108,39 @@ typedef struct	s_cub3d
 	int			down;
 	int			left;
 	int			right;
+	t_tex		tex;
+	int			error;
+	char		*err_message;
 }				t_cub3d;
 
 /*
 ** CREATE_MAP.C
 */
-int				count_x(int fd, t_cub3d *cub);
-void			create_map(int fd, t_cub3d *cub, t_map *world);
-void			adjust_map(t_cub3d *cub, t_map *world);
+void			count_x(int fd, t_cub3d *cub);
+void			create_map(int fd, t_cub3d *cub);
+void			adjust_map(t_cub3d *cub);
+void			complete_map(t_cub3d *cub);
 
 /*
 ** CHECK_MAP.C
 */
-int				check_map(t_cub3d *cub, t_map *world);
+void			check_map(t_cub3d *cub);
+
+/*
+** TEXTURES.C
+*/
+void			init_textures(t_cub3d *cub);
+void			assign_tex(t_cub3d *cub, char *line);
+void			import_tex(t_cub3d *cub);
 
 /*
 ** INIT_VAR.C
 */
 void			init_cub(t_cub3d *cub);
-void			init_position(t_cub3d *cub, t_map *world);
+void			init_position(t_cub3d *cub);
 void			init_direction(t_cub3d *cub);
 void			init_plane(t_cub3d *cub);
-void			init_var(t_cub3d *cub, t_map *world);
+void			init_var(t_cub3d *cub);
 
 /*
 ** DRAWING.C

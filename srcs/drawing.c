@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:08:14 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/06 16:45:24 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 12:42:31 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	draw_walls(t_cub3d *cub, int x)
 		col = 0xE9F00F;
 	while (y < cub->draw_end)
 	{
-		ft_memcpy(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
+		ft_memmove(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
 		y++;
 	}
 }
@@ -42,7 +42,7 @@ void	draw_floor(t_cub3d *cub, int x)
 	col = 0x8A1DC4;
 	while (y < cub->res_y)
 	{
-		ft_memcpy(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
+		ft_memmove(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
 		y++;
 	}
 }
@@ -56,7 +56,7 @@ void	draw_ceiling(t_cub3d *cub, int x)
 	col = 0xC41DB3;
 	while (y < cub->draw_start)
 	{
-		ft_memcpy(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
+		ft_memmove(cub->img_ptr + 4 * cub->res_x * y + x * 4, &col, sizeof(int));
 		y++;
 	}
 }
