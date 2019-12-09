@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 16:09:15 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/09 18:29:33 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct	s_map
 
 typedef struct	s_tex
 {
+	int			color;
+	char		*tex_path;
 	char		*tex_n;
 	char		*tex_s;
 	char		*tex_e;
@@ -165,10 +167,6 @@ int				real_key(int key, t_cub3d *cub);
 */
 int				motion(t_cub3d *cub);
 
-/*typedef struct	s_tex
-{
-	int			;
-	int			res_y;
-}				t_tex;
-*/
+int				exit_prog(void);
+
 #endif
