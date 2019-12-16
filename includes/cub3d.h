@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 18:29:33 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/16 17:24:27 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,17 @@
 http://www-igm.univ-mlv.fr/~berstel/Cours/Xlib/13-Evenements.pdf
 */
 
-typedef struct	s_map
-{
-	int			height;
-	char		*err_message;
-}				t_map;
+# define BLUE 0x2CB4D5
+# define GREEN 0x43D52C
+# define RED 0xEB4006
+# define YELLOW 0xE9F00F
 
 typedef struct	s_tex
 {
 	int			color;
+	int			width;
+	int			height;
 	char		*tex_path;
-	char		*tex_n;
-	char		*tex_s;
-	char		*tex_e;
-	char		*tex_w;
 	void		*image;
 	void		*img_ptr;
 	int			bit_pix;
@@ -99,7 +96,7 @@ typedef struct	s_cub3d
     int			step_y;
 	int			wall_hit;	//was there a wall hit?
 	int			side;		//was a NS or a EW wall hit?
-	int			line_height;
+	int			line_h;
 	int			draw_start;
     int			draw_end;
 	double		mov_speed;
@@ -110,7 +107,10 @@ typedef struct	s_cub3d
 	int			down;
 	int			left;
 	int			right;
-	t_tex		tex;
+	t_tex		tex[7];
+	double		wall_x;
+	int			x_coor;
+	int			y_coor;
 	int			error;
 	char		*err_message;
 }				t_cub3d;
@@ -131,9 +131,8 @@ void			check_map(t_cub3d *cub);
 /*
 ** TEXTURES.C
 */
-void			init_textures(t_cub3d *cub);
-void			assign_tex(t_cub3d *cub, char *line);
-void			import_tex(t_cub3d *cub);
+void			assign_tex(t_cub3d *cub, char *line, int i);
+void			import_tex(t_cub3d *cub, int i);
 
 /*
 ** INIT_VAR.C

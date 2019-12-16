@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 17:09:28 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/22 14:34:53 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/16 16:48:29 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ char		*ft_strtrim(char const *s1, char const *set)
 	int		k;
 	char	*str;
 
+	if (!s1 || !set)
+		return (NULL);
 	i = 0;
 	j = ft_strlen(s1);
 	k = 0;
-	if (!s1 || !set)
-		return (NULL);
 	while (check_set(s1[i], set))
 		i++;
 	while (check_set(s1[j - 1], set) && j > i)

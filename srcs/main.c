@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 18:37:02 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/16 17:30:50 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,34 +92,29 @@ void	read_desc(int fd, t_cub3d *cub)
 	char	*line;
 	int		ret;
 
-	init_textures(cub);
 	while ((ret = get_next_line(fd, &line)) && line[0] != '1')
 	{
 		if (line[0])
 		{
-			if (line[0] == 'N' && line[1] == 'O')
-			{
-				assign_tex(cub, line);
-				import_tex(cub);
-				cub->tex.tex_n = cub->tex.img_ptr;
-			}
 			if (line[0] == 'S' && line[1] == 'O')
 			{
-				assign_tex(cub, line);
-				import_tex(cub);
-				cub->tex.tex_s = cub->tex.img_ptr;
+				assign_tex(cub, line, 0);
+				import_tex(cub, 0);
 			}
-			if (line[0] == 'W' && line[1] == 'E')
+			if (line[0] == 'N' && line[1] == 'O')
 			{
-				assign_tex(cub, line);
-				import_tex(cub);
-				cub->tex.tex_w = cub->tex.img_ptr;
+				assign_tex(cub, line, 1);
+				import_tex(cub, 1);
 			}
 			if (line[0] == 'E' && line[1] == 'A')
 			{
-				assign_tex(cub, line);
-				import_tex(cub);
-				cub->tex.tex_e = cub->tex.img_ptr;
+				assign_tex(cub, line, 2);
+				import_tex(cub, 2);
+			}
+			if (line[0] == 'W' && line[1] == 'E')
+			{
+				assign_tex(cub, line, 3);
+				import_tex(cub, 3);
 			}
 			// if (line[0] == 'S')
 			// if (line[0] == 'F')
@@ -169,15 +164,7 @@ int	main(void)
 	cub.mlx_ptr = mlx_init();
 	cub.win_ptr = mlx_new_window(cub.mlx_ptr, cub.res_x, cub.res_y, "cub3d");
 
-	printf("%p\n", cub.tex.tex_n);
-	printf("%p\n", cub.tex.tex_s);
-	printf("%p\n", cub.tex.tex_w);
-	printf("%p\n", cub.tex.tex_e);
 	init_desc(&cub);
-	printf("%p\n", cub.tex.tex_n);
-	printf("%p\n", cub.tex.tex_s);
-	printf("%p\n", cub.tex.tex_w);
-	printf("%p\n", cub.tex.tex_e);
 
 	if (cub.error == 1)
 	{

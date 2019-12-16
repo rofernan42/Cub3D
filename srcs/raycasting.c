@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 11:57:02 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/16 15:42:35 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	dda(t_cub3d *cub)
 	}
 }
 
-static void	tracing(t_cub3d *cub)
+static void	casting(t_cub3d *cub)
 {
 	if (cub->side == 0 || cub->side == 1)
 		cub->wall_dist = (cub->map_x - cub->pos_x \
@@ -83,11 +83,11 @@ static void	tracing(t_cub3d *cub)
 	else if (cub->side == 2 || cub->side == 3)
 		cub->wall_dist = (cub->map_y - cub->pos_y \
 						+ (1 - cub->step_y) / 2) / cub->raydir_y;
-	cub->line_height = (int)(cub->res_y / cub->wall_dist);
-	cub->draw_start = -cub->line_height / 2 + cub->res_y / 2;
+	cub->line_h = (int)(cub->res_y / cub->wall_dist);
+	cub->draw_start = -cub->line_h / 2 + cub->res_y / 2;
 	if (cub->draw_start < 0)
 		cub->draw_start = 0;
-	cub->draw_end = cub->line_height / 2 + cub->res_y / 2;
+	cub->draw_end = cub->line_h / 2 + cub->res_y / 2;
 	if (cub->draw_end >= cub->res_y)
 		cub->draw_end = cub->res_y - 1;
 }
@@ -105,7 +105,7 @@ void		raycasting(t_cub3d *cub)
 		init_vectors(cub, x);
 		init_dda(cub);
 		dda(cub);
-		tracing(cub);
+		casting(cub);
 		draw_walls(cub, x);
 		draw_floor(cub, x);
 		draw_ceiling(cub, x);
