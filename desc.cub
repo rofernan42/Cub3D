@@ -4,10 +4,10 @@ SO textures/mossy.xpm
 WE textures/wood.xpm
 EA textures/bluegreyl.xpm
 
-S ./textures
+S ./textures/dog.xpm
 
-F 220,100,0
-C 225,30,0
+F textures/diamondfawn.xpm
+C 167,138,134
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1

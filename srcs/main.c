@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/16 17:30:50 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/17 16:31:19 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,29 @@ int		exit_prog(void)
 {
 	exit(1);
 	return (0);
+}
+
+void	display_error(t_cub3d *cub)
+{
+	if (cub->error == 1)
+	{
+		ft_putstr_fd("Error\n", 1);
+		ft_putstr_fd(cub->err_message, 1);
+		exit_prog();
+	}
+}
+
+void	test_desc_file(void)
+{
+	int fd;
+
+	if ((fd = open("desc.cub", O_RDONLY)) < 0)
+	{
+		ft_putstr_fd("Error\n", 1);
+		ft_putstr_fd("Could not find desc.cub.\n", 1);
+		close(fd);
+		exit_prog();
+	}
 }
 
 void	assign_res(t_cub3d *cub, int fd)
@@ -116,9 +139,22 @@ void	read_desc(int fd, t_cub3d *cub)
 				assign_tex(cub, line, 3);
 				import_tex(cub, 3);
 			}
-			// if (line[0] == 'S')
-			// if (line[0] == 'F')
-			// if (line[0] == 'C')
+			
+			if (line[0] == 'F')
+			{
+				assign_tex(cub, line, 4);
+				import_tex(cub, 4);
+			}
+			if (line[0] == 'C')
+			{
+				assign_tex(cub, line, 5);
+				import_tex(cub, 5);
+			}
+			if (line[0] == 'S')
+			{
+				assign_tex(cub, line, 6);
+				import_tex(cub, 6);
+			}
 		}
 		free(line);
 	}
@@ -137,46 +173,31 @@ void	init_desc(t_cub3d *cub)
 	close(fd);
 }
 
-
 int	main(void)
 {
 	t_cub3d	cub;
 
 	cub.error = 0;
+	test_desc_file();
 	init_map(&cub);
-	printf("int %lu    char %lu    char* %lu\n", sizeof(int), sizeof(char), sizeof(char*));
-	printf("%d  %d\n", cub.res_x, cub.res_y);
-	// TEMP: affichage map
+	// printf("int %lu    char %lu    char* %lu\n", sizeof(int), sizeof(char), sizeof(char*));
+	// printf("%d  %d\n", cub.res_x, cub.res_y);
+	// // TEMP: affichage map
 	int x = 0;
 	while (x < cub.map_h)
 	{
 		printf("%s\n", cub.map[x]);
 		x++;
 	}
-
 	check_map(&cub);
-	if (cub.error == 1)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(cub.err_message, 1);
-		return (0);
-	}
+	display_error(&cub);
 	cub.mlx_ptr = mlx_init();
 	cub.win_ptr = mlx_new_window(cub.mlx_ptr, cub.res_x, cub.res_y, "cub3d");
-
 	init_desc(&cub);
-
-	if (cub.error == 1)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(cub.err_message, 1);
-		return (0);
-	}
-
+	display_error(&cub);
 	mlx_hook(cub.win_ptr, 17, 0L, exit_prog, &cub);	/* termine le programme quand on ferme la fenetre */
 	mlx_hook(cub.win_ptr, 2, (1L<<0), press_key, &cub); /* action quand une touche est pressee */
 	mlx_hook(cub.win_ptr, 3, (1L<<1), real_key, &cub); /* action quand une touche est relachee */
-
 	init_var(&cub);
 	// printf("%f  %f\n", cub.pos_x, cub.pos_y);
 	mlx_loop_hook(cub.mlx_ptr, motion, &cub);

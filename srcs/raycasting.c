@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/16 15:42:35 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/17 14:42:19 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void		raycasting(t_cub3d *cub)
 		draw_walls(cub, x);
 		draw_floor(cub, x);
 		draw_ceiling(cub, x);
+		// sprite(cub, x);
 		x++;
 	}
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->image, 0, 0);

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/16 17:24:27 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/17 17:25:44 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,36 @@
 ** man man 3 math)
 ** -Toutes les fonctions de la MinilibX
 http://www-igm.univ-mlv.fr/~berstel/Cours/Xlib/13-Evenements.pdf
+
+textures: http://www.areyep.com/RIPandMCS-TextureLibrary-Walltextures.html
+xpm converter: https://www.online-utility.org/image/convert/to/XPM
+
+
+mlx_get_data_addr () returns information about the created image, allowing a user to modify it later.
+The img_ptr parameter specifies the image to use. The three next parameters should be the  addresses of
+three different valid integers.  bits_per_pixel will be filled with the number of bits needed to represent
+a pixel color (also called the depth of the image).  size_line is the number of bytes used to store
+one line of the image in memory.  This information is needed to move from one line to another in the image.
+endian tells you wether the pixel color in the image needs to be stored in little endian ( endian
+== 0), or big endian ( endian == 1).
+
+mlx_get_data_addr  returns  a char * address that represents the begining of the memory area where the
+image is stored. From this adress, the first bits_per_pixel bits represent the color of the first pixel
+in the first line of the image. The second group of bits_per_pixel bits represent the second pixel of
+the first line, and so on.  Add size_line to the adress to get the begining of the second line. You  can
+reach any pixels of the image that way.
 */
 
 # define BLUE 0x2CB4D5
 # define GREEN 0x43D52C
 # define RED 0xEB4006
 # define YELLOW 0xE9F00F
+# define PURPLE 0x8A1DC4
+# define PINK 0xC41DB3
 
 typedef struct	s_tex
 {
+	int			texture;
 	int			color;
 	int			width;
 	int			height;
@@ -149,6 +170,11 @@ void			init_var(t_cub3d *cub);
 void			draw_walls(t_cub3d *cub, int x);
 void			draw_floor(t_cub3d *cub, int x);
 void			draw_ceiling(t_cub3d *cub, int x);
+
+/*
+** SPRITE.C
+*/
+void			sprite(t_cub3d *cub, int x);
 
 /*
 ** RAYCASTING.C

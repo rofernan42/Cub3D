@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:20:01 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 11:56:52 by rofernan         ###   ########.fr       */
+/*   Updated: 2019/12/17 13:11:56 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,6 @@ static void	turn_right(t_cub3d *cub)
 					+ cub->plane_y * cos(-cub->rot_speed);
 	}
 }
-
-// static void	turn_up(t_cub3d *cub)
-// {
-// 	if (cub->t_up == 1)
-// 	{
-// 		cub->olddir_x = cub->dir_x;
-// 		cub->dir_x = cub->dir_x * cos(-cub->rot_speed) \
-// 					- cub->dir_y * sin(-cub->rot_speed);
-// 		cub->dir_y = cub->olddir_x * sin(-cub->rot_speed) \
-// 					+ cub->dir_y * cos(-cub->rot_speed);
-// 		cub->oldplane_x = cub->plane_x;
-// 		cub->plane_x = cub->plane_x * cos(-cub->rot_speed) \
-// 					- cub->plane_y * sin(-cub->rot_speed);
-// 		cub->plane_y = cub->oldplane_x * sin(-cub->rot_speed) \
-// 					+ cub->plane_y * cos(-cub->rot_speed);
-// 	}
-// }
 
 int			motion(t_cub3d *cub)
 {
