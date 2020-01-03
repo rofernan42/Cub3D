@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/03 11:14:43 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/03 16:46:17 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,21 +77,35 @@ typedef struct	s_tex
 	int			height;
 	char		*tex_path;
 	void		*image;
-	void		*img_ptr;
+	char		*img_ptr;
 	int			bit_pix;
 	int			size_line;
 	int			endian;
 }				t_tex;
 
-typedef struct s_coor
+typedef struct	s_floor
+{
+	double		fl_x_wall;
+	double		fl_y_wall;
+	double		cur_dist;
+	double		weight;
+	double		cur_fl_x;
+	double		cur_fl_y;
+	int			fl_tex_x;
+	int			fl_tex_y;
+	int			fl_tex;
+}				t_floor;
+
+
+typedef struct	s_coor
 {
 	double		x;
 	double		y;
 }				t_coor;
 
-typedef struct s_sprite
+typedef struct	s_sprite
 {
-	double		*zbuffer;
+	double		*distbuf;
 	int			nb_sprite;
 	int			*sp_order;
 	double		*sp_dist;
@@ -110,6 +124,18 @@ typedef struct s_sprite
 	int			tsp_x;
 	int			tsp_y;
 }				t_sprite;
+
+typedef struct	s_action
+{
+	int			up;
+	int			down;
+	int			r_left;
+	int			m_left;
+	int			r_right;
+	int			m_right;
+	double		m_speed;
+	double		r_speed;
+}				t_action;
 
 typedef struct	s_cub3d
 {
@@ -148,20 +174,16 @@ typedef struct	s_cub3d
 	int			line_h;
 	int			draw_start;
     int			draw_end;
-	double		mov_speed;
-	double		rot_speed;
 	double		olddir_x;
 	double		oldplane_x;
-	int			up;
-	int			down;
-	int			left;
-	int			right;
+	t_action	act;
 	t_tex		tex[7];
 	double		wall_x;
 	int			x_coor;
 	int			y_coor;
 	int			error;
 	char		*err_message;
+	t_floor		flr;
 	t_coor		*c_spr;
 	t_sprite	spr;
 }				t_cub3d;
@@ -200,6 +222,13 @@ void			init_var(t_cub3d *cub);
 void			draw_walls(t_cub3d *cub, int x);
 void			draw_floor(t_cub3d *cub, int x);
 void			draw_ceiling(t_cub3d *cub, int x);
+
+/*
+** SPRITE_SORTING.C
+*/
+void			count_sprites(t_cub3d *cub);
+void			create_sorting(t_cub3d *cub);
+void			sort_sprites(int *order, double *dist, int amount);
 
 /*
 ** SPRITE.C

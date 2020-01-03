@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/02 10:55:14 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:13:54 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	init_cub(t_cub3d *cub)
 {
-	cub->mov_speed = 0.05;
-	cub->rot_speed = 0.05;
-	cub->up = 0;
-	cub->down = 0;
-	cub->left = 0;
-	cub->right = 0;
+	cub->act.m_speed = 0.10;
+	cub->act.r_speed = 0.10;
+	cub->act.up = 0;
+	cub->act.down = 0;
+	cub->act.r_left = 0;
+	cub->act.m_left = 0;
+	cub->act.r_right = 0;
+	cub->act.m_right = 0;
+	cub->spr.distbuf = malloc(sizeof(int*) * cub->res_x);
 }
 
 void	init_position(t_cub3d *cub)

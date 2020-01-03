@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/03 10:40:00 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/03 15:41:52 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void		raycasting(t_cub3d *cub)
 	cub->image = mlx_new_image(cub->mlx_ptr, cub->res_x, cub->res_y);
 	cub->img_ptr = mlx_get_data_addr(cub->image, &cub->bit_pix, \
 									&cub->size_line, &cub->endian);
-	cub->zbuffer = malloc(sizeof(int*) * cub->res_x);
 	while (x < cub->res_x)
 	{
 		init_vectors(cub, x);
@@ -110,7 +109,7 @@ void		raycasting(t_cub3d *cub)
 		draw_walls(cub, x);
 		draw_floor(cub, x);
 		draw_ceiling(cub, x);
-		cub->zbuffer[x] = cub->wall_dist;
+		cub->spr.distbuf[x] = cub->wall_dist;
 		x++;
 	}
 	sprites(cub);
