@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:25:58 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/26 18:15:58 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/02 14:26:22 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,11 @@ int				get_next_line(int fd, char **line);
 int				ft_atoi_base(char *str, char *base);
 char			*ft_itoa_base(unsigned int nbr, char *base);
 char			*convert_base(char *nbr, char *base_from, char *base_to);
+int				ft_factorial(int nb);
+double			ft_power(double nb, int power);
+double			ft_sqrt(double nb);
+void			ft_swap_int(int *a, int *b);
+void			ft_swap_dbl(double *a, double *b);
 
 /*
 **================================= BONUS ======================================

@@ -1,34 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_swap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 13:37:38 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/22 13:55:11 by rofernan         ###   ########.fr       */
+/*   Created: 2020/01/02 12:19:51 by rofernan          #+#    #+#             */
+/*   Updated: 2020/01/02 14:26:26 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strndup(const char *src, size_t n)
+void	ft_swap_int(int *a, int *b)
 {
-	char	*dest;
-	size_t	i;
-	size_t	len;
+	int temp;
 
-	i = 0;
-	len = 0;
-	while (src[len] && len < n)
-		len++;
-	if (!(dest = malloc(sizeof(*dest) * (len + 1))))
-		return (NULL);
-	while (i < len)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	temp = *a;
+	*a = *b;
+	*b = temp;
+}
+
+void	ft_swap_dbl(double *a, double *b)
+{
+	double temp;
+
+	temp = *a;
+	*a = *b;
+	*b = temp;
 }

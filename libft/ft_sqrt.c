@@ -1,34 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_sqrt.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 13:37:38 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/22 13:55:11 by rofernan         ###   ########.fr       */
+/*   Created: 2019/07/08 19:56:22 by rofernan          #+#    #+#             */
+/*   Updated: 2020/01/02 11:41:34 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strndup(const char *src, size_t n)
+double	ft_sqrt(double nb)
 {
-	char	*dest;
-	size_t	i;
-	size_t	len;
+	int sqrt;
 
-	i = 0;
-	len = 0;
-	while (src[len] && len < n)
-		len++;
-	if (!(dest = malloc(sizeof(*dest) * (len + 1))))
-		return (NULL);
-	while (i < len)
+	sqrt = 0;
+	if (nb > 2147395600)
+		return (0);
+	while (sqrt * sqrt <= nb)
 	{
-		dest[i] = src[i];
-		i++;
+		if (sqrt * sqrt == nb)
+			return (sqrt);
+		sqrt++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (0);
 }

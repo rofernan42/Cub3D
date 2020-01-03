@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/17 17:25:44 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/03 11:14:43 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,34 @@ typedef struct	s_tex
 	int			endian;
 }				t_tex;
 
+typedef struct s_coor
+{
+	double		x;
+	double		y;
+}				t_coor;
+
+typedef struct s_sprite
+{
+	double		*zbuffer;
+	int			nb_sprite;
+	int			*sp_order;
+	double		*sp_dist;
+	double		sp_x;
+	double		sp_y;
+	double		inv_det;
+	double		trans_x;
+	double		trans_y;
+	int			sp_screen;
+	int			sp_h;
+	int			sp_w;
+	int			draw_startx;
+	int			draw_endx;
+	int			draw_starty;
+	int			draw_endy;
+	int			tsp_x;
+	int			tsp_y;
+}				t_sprite;
+
 typedef struct	s_cub3d
 {
 	char		**map;
@@ -112,7 +140,7 @@ typedef struct	s_cub3d
     double		side_dy;
     double		delta_dx;	//length of ray from one x or y-side to next x or y-side
 	double		delta_dy;
-    double		wall_dist;
+    double		wall_dist;	//perpwalldist
     int			step_x;		//what direction to step in x or y-direction (either +1 or -1)
     int			step_y;
 	int			wall_hit;	//was there a wall hit?
@@ -134,6 +162,8 @@ typedef struct	s_cub3d
 	int			y_coor;
 	int			error;
 	char		*err_message;
+	t_coor		*c_spr;
+	t_sprite	spr;
 }				t_cub3d;
 
 /*
@@ -165,7 +195,7 @@ void			init_plane(t_cub3d *cub);
 void			init_var(t_cub3d *cub);
 
 /*
-** DRAWING.C
+** DRAW_*.C
 */
 void			draw_walls(t_cub3d *cub, int x);
 void			draw_floor(t_cub3d *cub, int x);
@@ -174,7 +204,7 @@ void			draw_ceiling(t_cub3d *cub, int x);
 /*
 ** SPRITE.C
 */
-void			sprite(t_cub3d *cub, int x);
+void			sprites(t_cub3d *cub);
 
 /*
 ** RAYCASTING.C

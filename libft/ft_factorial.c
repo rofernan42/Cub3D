@@ -1,34 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_factorial.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 13:37:38 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/22 13:55:11 by rofernan         ###   ########.fr       */
+/*   Created: 2019/07/08 17:35:26 by rofernan          #+#    #+#             */
+/*   Updated: 2020/01/02 11:47:54 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-
-char	*ft_strndup(const char *src, size_t n)
+int	ft_factorial(int nb)
 {
-	char	*dest;
-	size_t	i;
-	size_t	len;
+	int fact;
 
-	i = 0;
-	len = 0;
-	while (src[len] && len < n)
-		len++;
-	if (!(dest = malloc(sizeof(*dest) * (len + 1))))
-		return (NULL);
-	while (i < len)
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	if (nb < 0)
+		return (0);
+	if (nb == 0)
+		return (1);
+	fact = nb * ft_factorial(nb - 1);
+	return (fact);
 }
