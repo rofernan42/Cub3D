@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/17 14:49:46 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:00:34 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	import_tex(t_cub3d *cub, int i)
 			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)))
 		{
 			cub->error = 1;
-			cub->err_message = ft_strdup("Could not convert xpm to image.\n");
+			cub->err_message = ft_strdup("Could not find image.\n");
 			return ;
 		}
 		if (!(cub->tex[i].img_ptr = mlx_get_data_addr(cub->tex[i].image, \

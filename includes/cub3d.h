@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/03 16:46:17 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/06 15:25:56 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,29 @@ the first line, and so on.  Add size_line to the adress to get the begining of t
 reach any pixels of the image that way.
 */
 
-# define BLUE 0x2CB4D5
-# define GREEN 0x43D52C
-# define RED 0xEB4006
-# define YELLOW 0xE9F00F
-# define PURPLE 0x8A1DC4
-# define PINK 0xC41DB3
+// # define BLUE 0x2CB4D5
+// # define GREEN 0x43D52C
+// # define RED 0xEB4006
+// # define YELLOW 0xE9F00F
+// # define PURPLE 0x8A1DC4
+// # define PINK 0xC41DB3
+
+# define KEY_A 0
+# define KEY_S 1
+# define KEY_D 2
+# define KEY_W 13
+
+# define KEY_H 4
+
+# define KEY_TAB 48
+# define KEY_SPACE 49
+# define KEY_ESC 53
+# define KEY_SHIFT 257
+
+# define KEY_LEFT 123
+# define KEY_RIGHT 124
+# define KEY_DOWN 125
+# define KEY_UP 126
 
 typedef struct	s_tex
 {
@@ -95,7 +112,6 @@ typedef struct	s_floor
 	int			fl_tex_y;
 	int			fl_tex;
 }				t_floor;
-
 
 typedef struct	s_coor
 {
@@ -135,6 +151,7 @@ typedef struct	s_action
 	int			m_right;
 	double		m_speed;
 	double		r_speed;
+	int			hud;
 }				t_action;
 
 typedef struct	s_cub3d
@@ -243,14 +260,28 @@ void			raycasting(t_cub3d *cub);
 /*
 ** ACTIONS.C
 */
-int				press_key(int key, t_cub3d *cub);
-int				real_key(int key, t_cub3d *cub);
+int				key_press(int key, t_cub3d *cub);
+int				key_release(int key, t_cub3d *cub);
+
+/*
+** HUD.C
+*/
+void			hud(t_cub3d *cub);
 
 /*
 ** MOTION.C
 */
 int				motion(t_cub3d *cub);
 
+/*
+** EXIT.C
+*/
 int				exit_prog(void);
+
+/*
+** ERROR.C
+*/
+void			display_error(t_cub3d *cub);
+void			test_desc_file(void);
 
 #endif

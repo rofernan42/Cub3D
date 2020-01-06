@@ -6,40 +6,11 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/02 14:31:11 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/06 14:45:25 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int		exit_prog(void)
-{
-	exit(1);
-	return (0);
-}
-
-void	display_error(t_cub3d *cub)
-{
-	if (cub->error == 1)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(cub->err_message, 1);
-		exit_prog();
-	}
-}
-
-void	test_desc_file(void)
-{
-	int fd;
-
-	if ((fd = open("desc.cub", O_RDONLY)) < 0)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd("Could not find desc.cub.\n", 1);
-		close(fd);
-		exit_prog();
-	}
-}
 
 void	assign_res(t_cub3d *cub, int fd)
 {
@@ -139,7 +110,6 @@ void	read_desc(int fd, t_cub3d *cub)
 				assign_tex(cub, line, 3);
 				import_tex(cub, 3);
 			}
-			
 			if (line[0] == 'F')
 			{
 				assign_tex(cub, line, 4);
@@ -180,9 +150,6 @@ int	main(void)
 	cub.error = 0;
 	test_desc_file();
 	init_map(&cub);
-	// printf("int %lu    char %lu    char* %lu\n", sizeof(int), sizeof(char), sizeof(char*));
-	// printf("%d  %d\n", cub.res_x, cub.res_y);
-	// // TEMP: affichage map
 	int x = 0;
 	while (x < cub.map_h)
 	{
@@ -196,10 +163,9 @@ int	main(void)
 	init_desc(&cub);
 	display_error(&cub);
 	mlx_hook(cub.win_ptr, 17, 0L, exit_prog, &cub);	/* termine le programme quand on ferme la fenetre */
-	mlx_hook(cub.win_ptr, 2, (1L<<0), press_key, &cub); /* action quand une touche est pressee */
-	mlx_hook(cub.win_ptr, 3, (1L<<1), real_key, &cub); /* action quand une touche est relachee */
+	mlx_hook(cub.win_ptr, 2, (1L << 0), key_press, &cub); /* action quand une touche est pressee */
+	mlx_hook(cub.win_ptr, 3, (1L << 1), key_release, &cub); /* action quand une touche est relachee */
 	init_var(&cub);
-	// printf("%f  %f\n", cub.pos_x, cub.pos_y);
 	mlx_loop_hook(cub.mlx_ptr, motion, &cub);
 	mlx_loop(cub.mlx_ptr);
 }

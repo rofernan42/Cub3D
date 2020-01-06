@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/03 15:13:54 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/06 15:06:01 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	init_cub(t_cub3d *cub)
 	cub->act.m_left = 0;
 	cub->act.r_right = 0;
 	cub->act.m_right = 0;
+	cub->act.hud = 1;
 	cub->spr.distbuf = malloc(sizeof(int*) * cub->res_x);
 }
 
