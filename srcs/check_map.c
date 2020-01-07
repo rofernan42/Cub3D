@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:36:58 by rofernan          #+#    #+#             */
-/*   Updated: 2019/12/09 15:47:47 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:37:31 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static int	check_position(t_cub3d *cub)
 	return (1);
 }
 
-void		check_map(t_cub3d *cub)
+void		check_map(t_cub3d *cub, t_buf *buf)
 {
 	if (!(check_size(cub)))
 	{
@@ -132,4 +132,5 @@ void		check_map(t_cub3d *cub)
 		cub->err_message = ft_strdup("Must have 1 position identifier.\n");
 		return ;
 	}
+	display_error(cub, buf);
 }

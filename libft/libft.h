@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:25:58 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/02 14:26:22 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/07 16:29:56 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ double			ft_power(double nb, int power);
 double			ft_sqrt(double nb);
 void			ft_swap_int(int *a, int *b);
 void			ft_swap_dbl(double *a, double *b);
+char			**ft_split_nl(char const *s);
 
 /*
 **================================= BONUS ======================================

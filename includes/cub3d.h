@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 15:25:56 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/07 19:17:18 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ reach any pixels of the image that way.
 # define KEY_DOWN 125
 # define KEY_UP 126
 
+typedef struct	s_buf
+{
+	char		*content;
+	char		**buffer;
+}				t_buf;
+
 typedef struct	s_tex
 {
 	int			texture;
@@ -156,6 +162,7 @@ typedef struct	s_action
 
 typedef struct	s_cub3d
 {
+	char		**buf;
 	char		**map;
 	int			map_h;
 	int			map_w;
@@ -208,21 +215,23 @@ typedef struct	s_cub3d
 /*
 ** CREATE_MAP.C
 */
-void			count_x(int fd, t_cub3d *cub);
-void			create_map(int fd, t_cub3d *cub);
+void			create_map(t_cub3d *cub, t_buf *buf);
+
+/*
+** ARRANGE_MAP.C
+*/
 void			adjust_map(t_cub3d *cub);
 void			complete_map(t_cub3d *cub);
 
 /*
 ** CHECK_MAP.C
 */
-void			check_map(t_cub3d *cub);
+void			check_map(t_cub3d *cub, t_buf *buf);
 
 /*
 ** TEXTURES.C
 */
-void			assign_tex(t_cub3d *cub, char *line, int i);
-void			import_tex(t_cub3d *cub, int i);
+void			get_textures(t_cub3d *cub, t_buf *buf);
 
 /*
 ** INIT_VAR.C
@@ -281,7 +290,12 @@ int				exit_prog(void);
 /*
 ** ERROR.C
 */
-void			display_error(t_cub3d *cub);
-void			test_desc_file(void);
+void			free_all(t_cub3d *cub, t_buf *buf);
+void			display_error(t_cub3d *cub, t_buf *buf);
+
+/*
+** CHECK_CONTENT.C
+*/
+void			check_content(t_cub3d *cub, t_buf *buf);
 
 #endif

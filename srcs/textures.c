@@ -6,13 +6,13 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 14:00:34 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/07 17:40:55 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	assign_color(t_cub3d *cub, char *line, int ind)
+static void	assign_color(t_cub3d *cub, char *line, int ind)
 {
 	int		i;
 	int		count;
@@ -38,7 +38,7 @@ void	assign_color(t_cub3d *cub, char *line, int ind)
 	cub->tex[ind].color = color;
 }
 
-void	assign_tex(t_cub3d *cub, char *line, int ind)
+static void	assign_path_tex(t_cub3d *cub, char *line, int ind)
 {
 	int i;
 
@@ -60,7 +60,7 @@ void	assign_tex(t_cub3d *cub, char *line, int ind)
 	}
 }
 
-void	import_tex(t_cub3d *cub, int i)
+static void	import_tex(t_cub3d *cub, int i)
 {
 	if (cub->tex[i].texture == 1)
 	{
@@ -68,7 +68,8 @@ void	import_tex(t_cub3d *cub, int i)
 			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)))
 		{
 			cub->error = 1;
-			cub->err_message = ft_strdup("Could not find image.\n");
+			cub->err_message = ft_strdup("Could not find image \
+											or wrong image type.\n");
 			return ;
 		}
 		if (!(cub->tex[i].img_ptr = mlx_get_data_addr(cub->tex[i].image, \
@@ -79,4 +80,36 @@ void	import_tex(t_cub3d *cub, int i)
 			return ;
 		}
 	}
+}
+
+static void	assign_tex(t_cub3d *cub, char *line, int i)
+{
+	assign_path_tex(cub, line, i);
+	import_tex(cub, i);
+}
+
+void		get_textures(t_cub3d *cub, t_buf *buf)
+{
+	int i;
+
+	i = 0;
+	while (buf->buffer[i])
+	{
+		if (buf->buffer[i][0] == 'S' && buf->buffer[i][1] == 'O')
+			assign_tex(cub, buf->buffer[i], 0);
+		if (buf->buffer[i][0] == 'N' && buf->buffer[i][1] == 'O')
+			assign_tex(cub, buf->buffer[i], 1);
+		if (buf->buffer[i][0] == 'E' && buf->buffer[i][1] == 'A')
+			assign_tex(cub, buf->buffer[i], 2);
+		if (buf->buffer[i][0] == 'W' && buf->buffer[i][1] == 'E')
+			assign_tex(cub, buf->buffer[i], 3);
+		if (buf->buffer[i][0] == 'F')
+			assign_tex(cub, buf->buffer[i], 4);
+		if (buf->buffer[i][0] == 'C')
+			assign_tex(cub, buf->buffer[i], 5);
+		if (buf->buffer[i][0] == 'S')
+			assign_tex(cub, buf->buffer[i], 6);
+		i++;
+	}
+	display_error(cub, buf);
 }
