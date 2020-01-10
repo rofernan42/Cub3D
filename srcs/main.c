@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/07 19:20:55 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 11:36:09 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,19 @@ int	main(int argc, char **argv)
 		printf("%s\n", cub.map[x]);
 		x++;
 	}
-	cub.mlx_ptr = mlx_init();
-	cub.win_ptr = mlx_new_window(cub.mlx_ptr, cub.res_x, cub.res_y, "cub3d");
+	if (!(cub.mlx_ptr = mlx_init()) \
+		|| !(cub.win_ptr = \
+		mlx_new_window(cub.mlx_ptr, cub.res_x, cub.res_y, "cub3d")))
+		return (0);
 	get_textures(&cub, &buf);
+	init_var(&cub);
+	raycasting(&cub);
+	// convert_bmp(&cub);
 	mlx_hook(cub.win_ptr, 17, 0L, exit_prog, &cub);	/* termine le programme quand on ferme la fenetre */
 	mlx_hook(cub.win_ptr, 2, (1L << 0), key_press, &cub); /* action quand une touche est pressee */
 	mlx_hook(cub.win_ptr, 3, (1L << 1), key_release, &cub); /* action quand une touche est relachee */
-	init_var(&cub);
 	mlx_loop_hook(cub.mlx_ptr, motion, &cub);
 	mlx_loop(cub.mlx_ptr);
+
 	free_all(&cub, &buf);
 }

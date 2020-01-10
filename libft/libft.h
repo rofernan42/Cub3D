@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:25:58 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/07 16:29:56 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/08 16:43:21 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void			ft_putnbr_fd(int n, int fd);
 # define BUFFER_SIZE 32
 #endif
 
+int				ft_strcmp(const char *s1, const char *s2);
 void			ft_strdel(char **str);
 char			*ft_strndup(const char *src, size_t n);
 char			*ft_strjoin_free(char const *s1, char const *s2, int param);

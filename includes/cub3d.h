@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/07 19:17:18 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:02:57 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ image is stored. From this adress, the first bits_per_pixel bits represent the c
 in the first line of the image. The second group of bits_per_pixel bits represent the second pixel of
 the first line, and so on.  Add size_line to the adress to get the begining of the second line. You  can
 reach any pixels of the image that way.
+
+
+save bmp: https://stackoverflow.com/questions/2654480/writing-bmp-image-in-pure-c-c-without-other-libraries
 */
 
 // # define BLUE 0x2CB4D5
@@ -95,15 +98,17 @@ typedef struct	s_buf
 typedef struct	s_tex
 {
 	int			texture;
+	int			col;
 	int			color;
 	int			width;
 	int			height;
 	char		*tex_path;
 	void		*image;
-	char		*img_ptr;
+	void		*tex_ptr;
 	int			bit_pix;
 	int			size_line;
 	int			endian;
+	int			pix;
 }				t_tex;
 
 typedef struct	s_floor
@@ -116,7 +121,6 @@ typedef struct	s_floor
 	double		cur_fl_y;
 	int			fl_tex_x;
 	int			fl_tex_y;
-	int			fl_tex;
 }				t_floor;
 
 typedef struct	s_coor
@@ -243,11 +247,19 @@ void			init_plane(t_cub3d *cub);
 void			init_var(t_cub3d *cub);
 
 /*
+** PIX.C
+*/
+void	get_color(t_cub3d *cub, int ind, int x, int y);
+void	color_dist(t_cub3d *cub, int ind, double dist);
+void	draw_pix(t_cub3d *cub, int ind, int x, int y);
+
+/*
 ** DRAW_*.C
 */
 void			draw_walls(t_cub3d *cub, int x);
 void			draw_floor(t_cub3d *cub, int x);
 void			draw_ceiling(t_cub3d *cub, int x);
+void			draw_sky(t_cub3d *cub, int x);
 
 /*
 ** SPRITE_SORTING.C
@@ -297,5 +309,10 @@ void			display_error(t_cub3d *cub, t_buf *buf);
 ** CHECK_CONTENT.C
 */
 void			check_content(t_cub3d *cub, t_buf *buf);
+
+/*
+** BMP.C
+*/
+void	convert_bmp(t_cub3d *cub);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:20:01 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 14:56:56 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:59:19 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,19 @@ static void	move(t_cub3d *cub)
 	if (cub->act.up == 1)
 	{
 		if (cub->map[(int)(cub->pos_x + cub->dir_x * cub->act.m_speed)]\
-					[(int)(cub->pos_y)] != '1')
+					[(int)(cub->pos_y)] == '0')
 			cub->pos_x += cub->dir_x * cub->act.m_speed;
 		if (cub->map[(int)(cub->pos_x)]\
-					[(int)(cub->pos_y + cub->dir_y * cub->act.m_speed)] != '1')
+					[(int)(cub->pos_y + cub->dir_y * cub->act.m_speed)] == '0')
 			cub->pos_y += cub->dir_y * cub->act.m_speed;
 	}
 	if (cub->act.down == 1)
 	{
 		if (cub->map[(int)(cub->pos_x - cub->dir_x * cub->act.m_speed)]\
-					[(int)(cub->pos_y)] != '1')
+					[(int)(cub->pos_y)] == '0')
 			cub->pos_x -= cub->dir_x * cub->act.m_speed;
 		if (cub->map[(int)(cub->pos_x)]\
-					[(int)(cub->pos_y - cub->dir_y * cub->act.m_speed)] != '1')
+					[(int)(cub->pos_y - cub->dir_y * cub->act.m_speed)] == '0')
 			cub->pos_y -= cub->dir_y * cub->act.m_speed;
 	}
 }
@@ -39,19 +39,19 @@ static void	move_side(t_cub3d *cub)
 	if (cub->act.m_left == 1)
 	{
 		if (cub->map[(int)(cub->pos_x - cub->dir_y * cub->act.m_speed)]\
-					[(int)(cub->pos_y)] != '1')
+					[(int)(cub->pos_y)] == '0')
 			cub->pos_x -= cub->dir_y * cub->act.m_speed;
 		if (cub->map[(int)(cub->pos_x)]\
-					[(int)(cub->pos_y + cub->dir_x * cub->act.m_speed)] != '1')
+					[(int)(cub->pos_y + cub->dir_x * cub->act.m_speed)] == '0')
 			cub->pos_y += cub->dir_x * cub->act.m_speed;
 	}
 	if (cub->act.m_right == 1)
 	{
 		if (cub->map[(int)(cub->pos_x + cub->dir_y * cub->act.m_speed)]\
-					[(int)(cub->pos_y)] != '1')
+					[(int)(cub->pos_y)] == '0')
 			cub->pos_x += cub->dir_y * cub->act.m_speed;
 		if (cub->map[(int)(cub->pos_x)]\
-					[(int)(cub->pos_y - cub->dir_x * cub->act.m_speed)] != '1')
+					[(int)(cub->pos_y - cub->dir_x * cub->act.m_speed)] == '0')
 			cub->pos_y -= cub->dir_x * cub->act.m_speed;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:52:59 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 14:40:28 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 14:22:05 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,21 @@ static void	sprite_dimensions(t_cub3d *cub)
 		cub->spr.draw_endx = cub->res_x - 1;
 }
 
-static void	draw_sprites(t_cub3d *cub, int x)
+static void	draw_sprites(t_cub3d *cub, int x, int i)
 {
 	int y;
 	int d;
-	int sp_tex;
 
 	y = cub->spr.draw_starty;
 	while (y < cub->spr.draw_endy)
 	{
 		d = y * 256 - (cub->res_y - cub->spr.sp_h) * 128;
 		cub->spr.tsp_y = ((d * cub->tex[6].height) / cub->spr.sp_h) / 256;
-		sp_tex = cub->spr.tsp_x * cub->tex[6].bit_pix / 8
-				+ cub->spr.tsp_y * cub->tex[6].size_line;
-		if (cub->tex[6].img_ptr[sp_tex] != 0x0 \
+		get_color(cub, 6, cub->spr.tsp_x, cub->spr.tsp_y);
+		color_dist(cub, 6, cub->spr.sp_dist[i]);
+		if (cub->tex[6].color != 0x0 \
 			&& cub->spr.trans_y < cub->spr.distbuf[x])
-			ft_memmove(&cub->img_ptr[(cub->res_x * y + x) * cub->bit_pix / 8], \
-						&cub->tex[6].img_ptr[sp_tex], sizeof(int));
+			draw_pix(cub, 6, x, y);
 		y++;
 	}
 }
@@ -84,7 +82,7 @@ static void	init_sprites(t_cub3d *cub)
 				(x - (-cub->spr.sp_w / 2 + cub->spr.sp_screen)) * \
 				cub->tex[6].width / cub->spr.sp_w) / 256;
 			if (cub->spr.trans_y > 0)
-				draw_sprites(cub, x);
+				draw_sprites(cub, x, i);
 			x++;
 		}
 		i++;

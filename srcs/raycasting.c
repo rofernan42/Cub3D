@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 15:34:46 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:04:55 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,11 @@ void		raycasting(t_cub3d *cub)
 		casting(cub);
 		draw_walls(cub, x);
 		draw_floor(cub, x);
-		draw_ceiling(cub, x);
+		if (cub->tex[5].tex_path \
+		&& !ft_strcmp(cub->tex[5].tex_path, "textures/sky.xpm"))
+			draw_sky(cub, x);
+		else
+			draw_ceiling(cub, x);
 		cub->spr.distbuf[x] = cub->wall_dist;
 		x++;
 	}

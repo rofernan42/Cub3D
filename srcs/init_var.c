@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 15:06:01 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/08 14:56:32 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void	init_plane(t_cub3d *cub)
 		cub->plane_x = cub->dir_y * tan(M_PI * 33 / 180);
 		cub->plane_y = cub->dir_x * tan(M_PI * 33 / 180);
 	}
+	cub->map[(int)cub->pos_x][(int)cub->pos_y] = '0';
 }
 
 void	init_var(t_cub3d *cub)

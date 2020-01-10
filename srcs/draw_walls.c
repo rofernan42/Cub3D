@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 10:49:00 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 12:29:00 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:05:17 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@ static void	draw_color(t_cub3d *cub, int x, int ind)
 	y = cub->draw_start;
 	while (y < cub->draw_end)
 	{
-		ft_memmove(&cub->img_ptr[(cub->res_x * y + x) * cub->bit_pix / 8], \
-				&cub->tex[ind].color, sizeof(int));
+		cub->tex[ind].color = cub->tex[ind].col;
+		color_dist(cub, ind, cub->wall_dist);
+		draw_pix(cub, ind, x, y);
 		y++;
 	}
 }
@@ -44,7 +45,6 @@ static void	draw_color(t_cub3d *cub, int x, int ind)
 static void	set_tex_coor(t_cub3d *cub, int x, int ind)
 {
 	int y;
-	int walltex;
 
 	cub->x_coor = (int)(cub->wall_x * (double)(cub->tex[ind].width));
 	if ((cub->side == 0 || cub->side == 1) && cub->raydir_x > 0)
@@ -57,10 +57,9 @@ static void	set_tex_coor(t_cub3d *cub, int x, int ind)
 	{
 		cub->y_coor = y * 256 - cub->res_y * 128 + cub->line_h * 128;
 		cub->y_coor = cub->y_coor * cub->tex[ind].height / cub->line_h / 256;
-		walltex = cub->x_coor % cub->tex[ind].width * cub->tex[ind].bit_pix / 8
-				+ cub->y_coor % cub->tex[ind].height * cub->tex[ind].size_line;
-		ft_memmove(&cub->img_ptr[(cub->res_x * y + x) * cub->bit_pix / 8], \
-				&cub->tex[ind].img_ptr[walltex], sizeof(int));
+		get_color(cub, ind, cub->x_coor, cub->y_coor);
+		color_dist(cub, ind, cub->wall_dist);
+		draw_pix(cub, ind, x, y);
 		y++;
 	}
 }
@@ -70,15 +69,14 @@ void		draw_walls(t_cub3d *cub, int x)
 	int ind;
 
 	ind = define_tex_wall(cub);
+	
+	if (cub->side == 0 || cub->side == 1)
+		cub->wall_x = cub->pos_y + cub->wall_dist * cub->raydir_y;
+	else if (cub->side == 2 || cub->side == 3)
+		cub->wall_x = cub->pos_x + cub->wall_dist * cub->raydir_x;
+	cub->wall_x = cub->wall_x - floor(cub->wall_x);
 	if (cub->tex[ind].texture == 1)
-	{
-		if (cub->side == 0 || cub->side == 1)
-			cub->wall_x = cub->pos_y + cub->wall_dist * cub->raydir_y;
-		else if (cub->side == 2 || cub->side == 3)
-			cub->wall_x = cub->pos_x + cub->wall_dist * cub->raydir_x;
-		cub->wall_x = cub->wall_x - floor(cub->wall_x);
 		set_tex_coor(cub, x, ind);
-	}
 	else
 		draw_color(cub, x, ind);
 }

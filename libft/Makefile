@@ -6,7 +6,7 @@
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/15 12:07:06 by juligonz          #+#    #+#              #
-#    Updated: 2020/01/07 16:29:29 by rofernan         ###   ########.fr        #
+#    Updated: 2020/01/08 16:42:56 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ PART2				=	ft_substr.c				\
 						ft_putendl_fd.c			\
 						ft_putnbr_fd.c			\
 
-ADDITIONAL			=	ft_strjoin_free.c		\
+ADDITIONAL			=	ft_strcmp.c				\
+						ft_strjoin_free.c		\
 						ft_strdel.c				\
 						ft_strndup.c			\
 						get_next_line.c			\

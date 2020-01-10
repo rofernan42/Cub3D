@@ -6,7 +6,7 @@
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 15:44:33 by rofernan          #+#    #+#              #
-#    Updated: 2019/12/06 19:26:21 by rofernan         ###   ########.fr        #
+#    Updated: 2020/01/09 15:31:47 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ OBJSLIB				=	$(addprefix $(OBJS_PATH)/, $(OBJSLIB_NAME))
 CC					=	gcc
 
 CFLAGS				=	-Wall -Wextra -Werror -I./includes
-MLX					=	-I./ -lmlx -framework OpenGL -framework AppKit
+MLX					=	-lmlx -framework OpenGL -framework AppKit
 
 all:					$(NAME)
 

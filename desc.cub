@@ -1,13 +1,14 @@
 R 1000 800
-NO textures/stone.xpm
-SO textures/mossy.xpm
-WE textures/wood.xpm
-EA textures/redbrick.xpm
+
+SO textures/stone.xpm
+NO textures/mossy.xpm
+EA textures/wood.xpm
+WE textures/redbrick.xpm
 
 S textures/vase.xpm
 
 F textures/hexagone.xpm
-C textures/diamond.xpm
+C textures/sky.xpm
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1

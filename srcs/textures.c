@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/07 17:40:55 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 16:06:31 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,28 @@ static void	assign_color(t_cub3d *cub, char *line, int ind)
 {
 	int		i;
 	int		count;
-	int		color;
-	char	*tmp;
+	char	*rgb[3];
+	char	*color;
+	int		temp;
 
 	i = 0;
 	count = 0;
-	tmp = ft_strdup("");
 	while (count < 3)
 	{
-		if (ft_atoi(&line[i]) > 0)
-			tmp = ft_strjoin_free(tmp, \
-					ft_itoa_base(ft_atoi(&line[i]), "0123456789abcdef"), 2);
-		else
-			tmp = ft_strjoin_free(tmp, "00", 1);
+		temp = ft_atoi(&line[i]);
+		rgb[count] = ft_itoa_base(temp, "0123456789ABCDEF");
+		if (temp < 16)
+			rgb[count] = ft_strjoin_free("0", rgb[count], 0);
 		while (line[i] && line[i] != ',')
 			i++;
 		i++;
 		count++;
 	}
-	color = ft_atoi_base(tmp, "0123456789abcdef");
-	cub->tex[ind].color = color;
+	color = ft_strjoin_free(rgb[0], rgb[1], 2);
+	color = ft_strjoin_free(color, rgb[2], 2);
+	cub->tex[ind].col = ft_atoi_base(color, "0123456789ABCDEF");
 }
+
 
 static void	assign_path_tex(t_cub3d *cub, char *line, int ind)
 {
@@ -68,11 +69,11 @@ static void	import_tex(t_cub3d *cub, int i)
 			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)))
 		{
 			cub->error = 1;
-			cub->err_message = ft_strdup("Could not find image \
-											or wrong image type.\n");
+			cub->err_message = \
+				ft_strdup("Could not find image or wrong image type.\n");
 			return ;
 		}
-		if (!(cub->tex[i].img_ptr = mlx_get_data_addr(cub->tex[i].image, \
+		if (!(cub->tex[i].tex_ptr = mlx_get_data_addr(cub->tex[i].image, \
 			&cub->tex[i].bit_pix, &cub->tex[i].size_line, &cub->tex[i].endian)))
 		{
 			cub->error = 1;
