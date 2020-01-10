@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 10:49:00 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 16:05:17 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:21:57 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void		draw_walls(t_cub3d *cub, int x)
 	int ind;
 
 	ind = define_tex_wall(cub);
-	
 	if (cub->side == 0 || cub->side == 1)
 		cub->wall_x = cub->pos_y + cub->wall_dist * cub->raydir_y;
 	else if (cub->side == 2 || cub->side == 3)

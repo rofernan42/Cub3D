@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 16:02:57 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:22:13 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ typedef struct	s_action
 
 typedef struct	s_cub3d
 {
+	int			arg;
 	char		**buf;
 	char		**map;
 	int			map_h;
@@ -249,9 +250,9 @@ void			init_var(t_cub3d *cub);
 /*
 ** PIX.C
 */
-void	get_color(t_cub3d *cub, int ind, int x, int y);
-void	color_dist(t_cub3d *cub, int ind, double dist);
-void	draw_pix(t_cub3d *cub, int ind, int x, int y);
+void			get_color(t_cub3d *cub, int ind, int x, int y);
+void			color_dist(t_cub3d *cub, int ind, double dist);
+void			draw_pix(t_cub3d *cub, int ind, int x, int y);
 
 /*
 ** DRAW_*.C
@@ -260,6 +261,7 @@ void			draw_walls(t_cub3d *cub, int x);
 void			draw_floor(t_cub3d *cub, int x);
 void			draw_ceiling(t_cub3d *cub, int x);
 void			draw_sky(t_cub3d *cub, int x);
+void			draw_all(t_cub3d *cub, int x);
 
 /*
 ** SPRITE_SORTING.C
@@ -277,6 +279,11 @@ void			sprites(t_cub3d *cub);
 ** RAYCASTING.C
 */
 void			raycasting(t_cub3d *cub);
+
+/*
+** IMAGE.C
+*/
+void			put_image(t_cub3d *cub);
 
 /*
 ** ACTIONS.C
@@ -313,6 +320,6 @@ void			check_content(t_cub3d *cub, t_buf *buf);
 /*
 ** BMP.C
 */
-void	convert_bmp(t_cub3d *cub);
+void			convert_bmp(t_cub3d *cub);
 
 #endif

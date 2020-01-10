@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:39:08 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 17:04:55 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 19:34:03 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,26 +97,15 @@ void		raycasting(t_cub3d *cub)
 	int x;
 
 	x = 0;
-	cub->image = mlx_new_image(cub->mlx_ptr, cub->res_x, cub->res_y);
-	cub->img_ptr = mlx_get_data_addr(cub->image, &cub->bit_pix, \
-									&cub->size_line, &cub->endian);
 	while (x < cub->res_x)
 	{
 		init_vectors(cub, x);
 		init_dda(cub);
 		dda(cub);
 		casting(cub);
-		draw_walls(cub, x);
-		draw_floor(cub, x);
-		if (cub->tex[5].tex_path \
-		&& !ft_strcmp(cub->tex[5].tex_path, "textures/sky.xpm"))
-			draw_sky(cub, x);
-		else
-			draw_ceiling(cub, x);
+		draw_all(cub, x);
 		cub->spr.distbuf[x] = cub->wall_dist;
 		x++;
 	}
 	sprites(cub);
-	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->image, 0, 0);
-	mlx_destroy_image(cub->mlx_ptr, cub->image);
 }

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 10:20:01 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/08 14:59:19 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 20:25:43 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int			motion(t_cub3d *cub)
 	move_side(cub);
 	turn_left(cub);
 	turn_right(cub);
-	raycasting(cub);
+	put_image(cub);
 	hud(cub);
 	return (0);
 }

@@ -1,42 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/06 12:42:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 20:16:40 by rofernan         ###   ########.fr       */
+/*   Created: 2020/01/10 19:33:52 by rofernan          #+#    #+#             */
+/*   Updated: 2020/01/10 20:25:37 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	free_all(t_cub3d *cub, t_buf *buf)
+void		put_image(t_cub3d *cub)
 {
-	int i;
-
-	i = 0;
-	if (buf->content)
-		free(buf->content);
-	if (buf->buffer)
+	cub->image = mlx_new_image(cub->mlx_ptr, cub->res_x, cub->res_y);
+	cub->img_ptr = mlx_get_data_addr(cub->image, &cub->bit_pix, \
+									&cub->size_line, &cub->endian);
+	raycasting(cub);
+	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->image, 0, 0);
+	if (cub->arg)
 	{
-		while (buf->buffer[i])
-		{
-			free(buf->buffer[i]);
-			i++;
-		}
-		free(buf->buffer);
-	}
-}
-
-void	display_error(t_cub3d *cub, t_buf *buf)
-{
-	if (cub->error == 1)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(cub->err_message, 1);
-		free_all(cub, buf);
+		convert_bmp(cub);
 		exit_prog();
 	}
+	mlx_destroy_image(cub->mlx_ptr, cub->image);
 }

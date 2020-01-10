@@ -1,42 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/01/06 12:42:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 20:16:40 by rofernan         ###   ########.fr       */
+/*   Created: 2020/01/10 17:28:06 by rofernan          #+#    #+#             */
+/*   Updated: 2020/01/10 17:29:12 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	free_all(t_cub3d *cub, t_buf *buf)
+void	draw_all(t_cub3d *cub, int x)
 {
-	int i;
-
-	i = 0;
-	if (buf->content)
-		free(buf->content);
-	if (buf->buffer)
-	{
-		while (buf->buffer[i])
-		{
-			free(buf->buffer[i]);
-			i++;
-		}
-		free(buf->buffer);
-	}
-}
-
-void	display_error(t_cub3d *cub, t_buf *buf)
-{
-	if (cub->error == 1)
-	{
-		ft_putstr_fd("Error\n", 1);
-		ft_putstr_fd(cub->err_message, 1);
-		free_all(cub, buf);
-		exit_prog();
-	}
+	draw_walls(cub, x);
+	draw_floor(cub, x);
+	if (cub->tex[5].tex_path \
+	&& !ft_strcmp(cub->tex[5].tex_path, "textures/sky.xpm"))
+		draw_sky(cub, x);
+	else
+		draw_ceiling(cub, x);
 }

@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 11:23:05 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 17:06:29 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 17:22:47 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ void	get_color(t_cub3d *cub, int ind, int x, int y)
 	}
 	else
 		cub->tex[ind].color = 0x0;
-	
 }
 
-void	color_dist(t_cub3d *cub, int ind, double dist)
+void	color_dist(t_cub3d *cub, int ind, double dis)
 {
-	if (dist > 2.5)
+	if (dis > 2.5)
 	{
 		cub->tex[ind].color = \
-		(((int)(((cub->tex[ind].color & 0xFF0000) >> 16) / (dist / 2.5)) << 16)|\
-		((int)(((cub->tex[ind].color & 0x00FF00) >> 8) / (dist / 2.5)) << 8)|\
-		(int)((cub->tex[ind].color & 0x0000FF) / (dist / 2.5)));
+		(((int)(((cub->tex[ind].color & 0xFF0000) >> 16) / (dis / 2.5)) << 16) |
+		((int)(((cub->tex[ind].color & 0x00FF00) >> 8) / (dis / 2.5)) << 8) |
+		(int)((cub->tex[ind].color & 0x0000FF) / (dis / 2.5)));
 	}
 }
 

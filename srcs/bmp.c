@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:46 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 11:37:55 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/10 19:36:59 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,7 @@ void	convert_bmp(t_cub3d *cub)
 	img = malloc((sizeof(char) * 3 * cub->res_x * cub->res_y));
 	ft_memset(img, 0, 3 * cub->res_x * cub->res_y);
 
-	int red[cub->res_x][cub->res_y];
-	int green[cub->res_x][cub->res_y];
-	int blue[cub->res_x][cub->res_y];
-	for(int i=0; i<cub->res_x; i++)
-	{
-		for(int j=0; j<cub->res_y; j++)
-		{
-			int x=i; int y=(cub->res_y-1)-j;
-			int r = red[i][j]*255;
-			int g = green[i][j]*255;
-			int b = blue[i][j]*255;
-			if (r > 255) r=255;
-			if (g > 255) g=255;
-			if (b > 255) b=255;
-			img[(x+y*cub->res_x)*3+2] = (unsigned char)(r);
-			img[(x+y*cub->res_x)*3+1] = (unsigned char)(g);
-			img[(x+y*cub->res_x)*3+0] = (unsigned char)(b);
-		}
-	}
+	
 
 
 	unsigned char bmpfileheader[14] = {'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0};
@@ -62,22 +44,40 @@ void	convert_bmp(t_cub3d *cub)
 	bmpinfoheader[11] = (unsigned char)(cub->res_y>>24);
 
 	fd = open("img.bmp", O_WRONLY | O_CREAT | O_TRUNC | O_APPEND);
-	// write(fd, &pix, 1);
-	// fwrite(bmpfileheader,1,14,fd);
-	// fwrite(bmpinfoheader,1,40,fd);
-	// for(int i=0; i<cub->res_y; i++)
-	// {
- 	//    fwrite(img+(cub->res_x*(cub->res_y-i-1)*3),3,cub->res_x,fd);
- 	//    fwrite(bmppad,1,(4-(cub->res_x*3)%4)%4,fd);
-	// }
+	int i = 0;
+	int j;
+	while (i < 14)
+		write(fd, &bmpfileheader[i++], 1);
+	i = 0;
+	while (i < 40)
+		write(fd, &bmpinfoheader[i++], 1);
+	i = 0;
+	
+	int col_img;
+	int color;
+	int x;
+	int y;
+	while (j < cub->res_y)
+	{
+		i = 0;
+		while (i < cub->res_x)
+		{
+			x = i;
+			y = cub->res_y - 1 - j;
+			col_img = *(int*)(cub->img_ptr + (cub->res_x * y + x) * cub->bit_pix / 8);
+			color = (col_img & 0xFF0000) | (col_img & 0x00FF00) | (col_img & 0x0000FF);
+			write(fd, &color, 3);
+			i++;
+		}
+		i = 0;
+		while (i < (4 - (cub->res_x * 3) % 4) % 4)
+		{
+			write(fd, &bmppad, 1);
+			i++;
+		}
+		j++;
+	}
 	printf("test1");
 	free(img);
 	close(fd);
 }
-
-
-// if (ft_strcmp(arg, "--save") == 0)
-// 	{
-		
-// 	}
-// 	exit_prog();
