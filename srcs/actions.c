@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 19:36:21 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/06 15:31:08 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:03:22 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int		key_press(int key, t_cub3d *cub)
 	if (key == KEY_SHIFT)
 		cub->act.m_speed = 0.20;
 	if (key == KEY_ESC)
-		exit_prog();
+		return(exit_prog(cub));
 	if (key == KEY_H)
 	{
 		if (cub->act.hud == 0)

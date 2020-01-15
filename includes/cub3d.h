@@ -6,71 +6,22 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 15:26:43 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:31:16 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include <mlx.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/uio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include "Libft/libft.h"
-
-/*
-** http://projet-moteur-3d.e-monsite.com/pages/raycasting/raycasting.html
-** https://tronche.com/gui/x/xlib/events/keyboard-pointer/keyboard-pointer.html
-** https://user.oc-static.com/ftp/mateo21/sdlkeysym.html
-**
-** IMPORTANT: Event et EventMask: https://code.woboq.org/qt5/include/X11/X.h.html
-
-** tuto raycasting: https://permadi.com/1996/05/ray-casting-tutorial-table-of-contents/
-** code C tuto: http://zupi.free.fr/PTuto/index.php?ch=ptuto&p=s3De
-** https://lodev.org/cgtutor/raycasting.html
-*/
-
-/* Fonctions externes autorisées:
-** -open, read, write, malloc, free, perror,
-** strerror, exit
-** -Toutes les fonctions de la lib math (-lm
-** man man 3 math)
-** -Toutes les fonctions de la MinilibX
-http://www-igm.univ-mlv.fr/~berstel/Cours/Xlib/13-Evenements.pdf
-
-textures: http://www.areyep.com/RIPandMCS-TextureLibrary-Walltextures.html
-xpm converter: https://www.online-utility.org/image/convert/to/XPM
-
-
-mlx_get_data_addr () returns information about the created image, allowing a user to modify it later.
-The img_ptr parameter specifies the image to use. The three next parameters should be the  addresses of
-three different valid integers.  bits_per_pixel will be filled with the number of bits needed to represent
-a pixel color (also called the depth of the image).  size_line is the number of bytes used to store
-one line of the image in memory.  This information is needed to move from one line to another in the image.
-endian tells you wether the pixel color in the image needs to be stored in little endian ( endian
-== 0), or big endian ( endian == 1).
-
-mlx_get_data_addr  returns  a char * address that represents the begining of the memory area where the
-image is stored. From this adress, the first bits_per_pixel bits represent the color of the first pixel
-in the first line of the image. The second group of bits_per_pixel bits represent the second pixel of
-the first line, and so on.  Add size_line to the adress to get the begining of the second line. You  can
-reach any pixels of the image that way.
-
-
-save bmp: https://stackoverflow.com/questions/2654480/writing-bmp-image-in-pure-c-c-without-other-libraries
-*/
-
-// # define BLUE 0x2CB4D5
-// # define GREEN 0x43D52C
-// # define RED 0xEB4006
-// # define YELLOW 0xE9F00F
-// # define PURPLE 0x8A1DC4
-// # define PINK 0xC41DB3
+# include <mlx.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <math.h>
+# include "Libft/libft.h"
 
 # define KEY_A 0
 # define KEY_S 1
@@ -166,7 +117,8 @@ typedef struct		s_action
 
 typedef struct		s_cub3d
 {
-	int				arg;
+	t_buf			buf;
+	int				screenshot;
 	char			**map;
 	int				map_h;
 	int				map_w;
@@ -188,20 +140,20 @@ typedef struct		s_cub3d
 	double			plane_x;
 	double			plane_y;
 	double			cam_plane;
-    double			raydir_x;
-    double			raydir_y;
+	double			raydir_x;
+	double			raydir_y;
 	double			side_dx;
-    double			side_dy;
-    double			delta_dx;
+	double			side_dy;
+	double			delta_dx;
 	double			delta_dy;
-    double			wall_dist;
-    int				step_x;
-    int				step_y;
+	double			wall_dist;
+	int				step_x;
+	int				step_y;
 	int				wall_hit;
 	int				side;
 	int				line_h;
 	int				draw_start;
-    int				draw_end;
+	int				draw_end;
 	double			olddir_x;
 	double			oldplane_x;
 	t_action		act;
@@ -209,8 +161,6 @@ typedef struct		s_cub3d
 	double			wall_x;
 	int				x_coor;
 	int				y_coor;
-	int				error;
-	char			*err_message;
 	t_floor			flr;
 	t_coor			*c_spr;
 	t_sprite		spr;
@@ -230,12 +180,12 @@ typedef struct		s_bmp
 /*
 ** INIT_DESC.C
 */
-void				init_desc(t_cub3d *cub, char *desc, t_buf *buf);
+void				init_desc(t_cub3d *cub, char *desc);
 
 /*
 ** CHECK_CONTENT.C
 */
-void				check_content(t_cub3d *cub, t_buf *buf);
+void				check_content(t_cub3d *cub);
 
 /*
 ** BMP.C
@@ -245,12 +195,12 @@ void				convert_bmp(t_cub3d *cub);
 /*
 ** RESOLUTION.C
 */
-void				assign_res(t_cub3d *cub, t_buf *buf);
+void				assign_res(t_cub3d *cub);
 
 /*
 ** CREATE_MAP.C
 */
-void				create_map(t_cub3d *cub, t_buf *buf);
+void				create_map(t_cub3d *cub);
 
 /*
 ** ARRANGE_MAP.C
@@ -261,12 +211,12 @@ void				complete_map(t_cub3d *cub);
 /*
 ** CHECK_MAP.C
 */
-void				check_map(t_cub3d *cub, t_buf *buf);
+void				check_map(t_cub3d *cub);
 
 /*
 ** TEXTURES.C
 */
-void				get_textures(t_cub3d *cub, t_buf *buf);
+void				get_textures(t_cub3d *cub);
 
 /*
 ** INIT_VAR.C
@@ -330,18 +280,17 @@ int					motion(t_cub3d *cub);
 /*
 ** ERROR.C
 */
-void				display_error(t_cub3d *cub, t_buf *buf);
-
+void				display_error(t_cub3d *cub, char *err_message);
 
 /*
 ** FREE.C
 */
-void				free_all(t_cub3d *cub, t_buf *buf);
+void				free_all(t_cub3d *cub);
 
 /*
 ** EXIT.C
 */
-int					exit_prog(void);
+int					exit_prog(t_cub3d *cub);
 
 /*
 ** MAIN.C

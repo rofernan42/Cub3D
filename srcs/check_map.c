@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/27 11:36:58 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/07 17:37:31 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 17:24:30 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,31 +106,14 @@ static int	check_position(t_cub3d *cub)
 	return (1);
 }
 
-void		check_map(t_cub3d *cub, t_buf *buf)
+void		check_map(t_cub3d *cub)
 {
 	if (!(check_size(cub)))
-	{
-		cub->error = 1;
-		cub->err_message = ft_strdup("Map too small.\n");
-		return ;
-	}
+		display_error(cub, "Map too small.\n");
 	if (!(check_edges(cub)))
-	{
-		cub->error = 1;
-		cub->err_message = ft_strdup("Map must be surrounded by 1.\n");
-		return ;
-	}
+		display_error(cub, "Map must be surrounded by 1.\n");
 	if (!(check_inside(cub)))
-	{
-		cub->error = 1;
-		cub->err_message = ft_strdup("Invalid value.\n");
-		return ;
-	}
+		display_error(cub, "Invalid value.\n");
 	if (!(check_position(cub)))
-	{
-		cub->error = 1;
-		cub->err_message = ft_strdup("Must have 1 position identifier.\n");
-		return ;
-	}
-	display_error(cub, buf);
+		display_error(cub, "Must have 1 position identifier.\n");
 }

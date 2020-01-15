@@ -6,38 +6,36 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:07:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 12:08:37 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:27:01 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	set_buffer(int fd, t_buf *buf)
+static void	set_buffer(int fd, t_cub3d *cub)
 {
 	char	*line;
 	int		ret;
 
-	buf->content = ft_strdup("");
+	cub->buf.content = ft_strdup("");
 	while ((ret = get_next_line(fd, &line)))
 	{
-		buf->content = ft_strjoin_free(buf->content, line, 2);
-		buf->content = ft_strjoin_free(buf->content, "\n", 1);
+		cub->buf.content = ft_strjoin_free(cub->buf.content, line, 2);
+		cub->buf.content = ft_strjoin_free(cub->buf.content, "\n", 1);
 	}
-	buf->content = ft_strjoin_free(buf->content, line, 2);
+	cub->buf.content = ft_strjoin_free(cub->buf.content, line, 2);
 }
 
-void		init_desc(t_cub3d *cub, char *desc, t_buf *buf)
+void		init_desc(t_cub3d *cub, char *desc)
 {
 	int		fd;
 
 	if ((fd = open(desc, O_RDONLY)) < 0)
 	{
-		cub->error = 1;
-		cub->err_message = ft_strdup("Could not find map description.\n");
 		close(fd);
-		return ;
+		display_error(cub, "Could not find map description.\n");
 	}
-	set_buffer(fd, buf);
-	buf->buffer = ft_split_nl(buf->content);
+	set_buffer(fd, cub);
+	cub->buf.buffer = ft_split_nl(cub->buf.content);
 	close(fd);
 }

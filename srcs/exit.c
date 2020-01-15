@@ -6,14 +6,15 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/06 12:51:09 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 15:24:35 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 18:59:24 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int		exit_prog(void)
+int		exit_prog(t_cub3d *cub)
 {
+	free_all(cub);
 	exit(1);
 	return (0);
 }

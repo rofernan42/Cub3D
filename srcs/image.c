@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/10 19:33:52 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 20:25:37 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 16:26:53 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void		put_image(t_cub3d *cub)
 									&cub->size_line, &cub->endian);
 	raycasting(cub);
 	mlx_put_image_to_window(cub->mlx_ptr, cub->win_ptr, cub->image, 0, 0);
-	if (cub->arg)
+	if (cub->screenshot)
 	{
 		convert_bmp(cub);
-		exit_prog();
+		exit_prog(cub);
 	}
 	mlx_destroy_image(cub->mlx_ptr, cub->image);
 }

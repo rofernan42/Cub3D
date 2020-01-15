@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 14:35:24 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 19:02:41 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ static void	assign_color(t_cub3d *cub, char *line, int ind)
 		while (line[i] && line[i] != ',')
 			i++;
 		if (count < 2 && i == (int)ft_strlen(line))
-		{
-			cub->error = 1;
-			return ;
-		}
+			display_error(cub, "Could not load color.\n");
 		i++;
 		count++;
 	}
@@ -79,40 +76,34 @@ static void	assign_tex(t_cub3d *cub, char *line, int i)
 	{
 		if (!(cub->tex[i].image = mlx_xpm_file_to_image(cub->mlx_ptr, \
 			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)))
-			cub->error = 1;
-		else
-		{
-			if (!(cub->tex[i].tex_ptr = mlx_get_data_addr(cub->tex[i].image, \
+			display_error(cub, "Could not find texture.\n");
+		if (!(cub->tex[i].tex_ptr = mlx_get_data_addr(cub->tex[i].image, \
 			&cub->tex[i].bit_pix, &cub->tex[i].size_line, &cub->tex[i].endian)))
-				cub->error = 1;
-		}
+			display_error(cub, "Could not get data address.\n");
 	}
-	if (cub->error == 1)
-		cub->err_message = ft_strdup("Could not load texture or color.\n");
 }
 
-void		get_textures(t_cub3d *cub, t_buf *buf)
+void		get_textures(t_cub3d *cub)
 {
 	int i;
 
 	i = 0;
-	while (buf->buffer[i])
+	while (cub->buf.buffer[i])
 	{
-		if (buf->buffer[i][0] == 'S' && buf->buffer[i][1] == 'O')
-			assign_tex(cub, buf->buffer[i], 0);
-		if (buf->buffer[i][0] == 'N' && buf->buffer[i][1] == 'O')
-			assign_tex(cub, buf->buffer[i], 1);
-		if (buf->buffer[i][0] == 'E' && buf->buffer[i][1] == 'A')
-			assign_tex(cub, buf->buffer[i], 2);
-		if (buf->buffer[i][0] == 'W' && buf->buffer[i][1] == 'E')
-			assign_tex(cub, buf->buffer[i], 3);
-		if (buf->buffer[i][0] == 'F')
-			assign_tex(cub, buf->buffer[i], 4);
-		if (buf->buffer[i][0] == 'C')
-			assign_tex(cub, buf->buffer[i], 5);
-		if (buf->buffer[i][0] == 'S')
-			assign_tex(cub, buf->buffer[i], 6);
+		if (cub->buf.buffer[i][0] == 'S' && cub->buf.buffer[i][1] == 'O')
+			assign_tex(cub, cub->buf.buffer[i], 0);
+		if (cub->buf.buffer[i][0] == 'N' && cub->buf.buffer[i][1] == 'O')
+			assign_tex(cub, cub->buf.buffer[i], 1);
+		if (cub->buf.buffer[i][0] == 'E' && cub->buf.buffer[i][1] == 'A')
+			assign_tex(cub, cub->buf.buffer[i], 2);
+		if (cub->buf.buffer[i][0] == 'W' && cub->buf.buffer[i][1] == 'E')
+			assign_tex(cub, cub->buf.buffer[i], 3);
+		if (cub->buf.buffer[i][0] == 'F')
+			assign_tex(cub, cub->buf.buffer[i], 4);
+		if (cub->buf.buffer[i][0] == 'C')
+			assign_tex(cub, cub->buf.buffer[i], 5);
+		if (cub->buf.buffer[i][0] == 'S')
+			assign_tex(cub, cub->buf.buffer[i], 6);
 		i++;
 	}
-	display_error(cub, buf);
 }
