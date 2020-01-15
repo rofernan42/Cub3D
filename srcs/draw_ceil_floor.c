@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 14:08:14 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 17:17:50 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:18:54 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,13 +103,12 @@ void		draw_sky(t_cub3d *cub, int x)
 	while (y < cub->draw_start)
 	{
 		skytex = \
-		(int)(x - cub->tex[5].width * (M_PI / 2) \
-		* atan(cub->dir_y / cub->dir_x)) \
+		abs((int)(x - cub->tex[5].width * (M_PI / 2) \
+		* atan(cub->dir_y / (cub->dir_x + 0.01))) \
 		* cub->tex[5].bit_pix / 8 \
-		+ y * cub->tex[5].size_line;
-		ft_memmove((cub->img_ptr + (cub->res_x * y + x) * \
-					cub->tex[5].bit_pix / 8), \
-					(cub->tex[5].tex_ptr + skytex), sizeof(int));
+		+ y * cub->tex[5].size_line);
+		cub->tex[5].color = *(int*)(cub->tex[5].tex_ptr + skytex);
+		draw_pix(cub, 5, x, y);
 		y++;
 	}
 }

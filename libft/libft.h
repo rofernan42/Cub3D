@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:25:58 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/08 16:43:21 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:41:41 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void			ft_putnbr_fd(int n, int fd);
 /*
 **=============================== ADDITIONAL ===================================
 */
-#ifndef BUFFER_SIZE
-# define BUFFER_SIZE 32
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 
 int				ft_strcmp(const char *s1, const char *s2);
 void			ft_strdel(char **str);
@@ -99,6 +99,7 @@ void			ft_lstadd_back(t_list **alst, t_list *new);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
+							void (*del)(void *));
 
 #endif

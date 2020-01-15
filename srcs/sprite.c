@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:52:59 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 14:22:05 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/14 15:56:24 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	draw_sprites(t_cub3d *cub, int x, int i)
 		d = y * 256 - (cub->res_y - cub->spr.sp_h) * 128;
 		cub->spr.tsp_y = ((d * cub->tex[6].height) / cub->spr.sp_h) / 256;
 		get_color(cub, 6, cub->spr.tsp_x, cub->spr.tsp_y);
-		color_dist(cub, 6, cub->spr.sp_dist[i]);
+		color_dist(cub, 6, cub->spr.sp_dist[i] / 4);
 		if (cub->tex[6].color != 0x0 \
 			&& cub->spr.trans_y < cub->spr.distbuf[x])
 			draw_pix(cub, 6, x, y);

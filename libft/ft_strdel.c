@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 11:24:34 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/22 11:25:09 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 15:04:36 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@ void	ft_strdel(char **str)
 {
 	if (!str)
 		return ;
-	free(*str);
-	*str = NULL;
+	if (*str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }

@@ -6,13 +6,13 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 20:03:27 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:35:24 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static void	assign_rgb(t_cub3d *cub, int temp, char **rgb)
+static void	assign_rgb(int temp, char **rgb)
 {
 	temp = (temp < 0 ? 0 : temp);
 	temp = (temp > 255 ? 255 : temp);
@@ -34,10 +34,10 @@ static void	assign_color(t_cub3d *cub, char *line, int ind)
 	while (count < 3)
 	{
 		temp = ft_atoi(&line[i]);
-		assign_rgb(cub, temp, &rgb[count]);
+		assign_rgb(temp, &rgb[count]);
 		while (line[i] && line[i] != ',')
 			i++;
-		if (count < 2 && i == ft_strlen(line))
+		if (count < 2 && i == (int)ft_strlen(line))
 		{
 			cub->error = 1;
 			return ;
@@ -78,15 +78,16 @@ static void	assign_tex(t_cub3d *cub, char *line, int i)
 	if (cub->tex[i].texture == 1)
 	{
 		if (!(cub->tex[i].image = mlx_xpm_file_to_image(cub->mlx_ptr, \
-			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)) \
-			|| !(cub->tex[i].tex_ptr = mlx_get_data_addr(cub->tex[i].image, \
-			&cub->tex[i].bit_pix, &cub->tex[i].size_line, &cub->tex[i].endian)))
-		{
+			cub->tex[i].tex_path, &cub->tex[i].width, &cub->tex[i].height)))
 			cub->error = 1;
-			return ;
+		else
+		{
+			if (!(cub->tex[i].tex_ptr = mlx_get_data_addr(cub->tex[i].image, \
+			&cub->tex[i].bit_pix, &cub->tex[i].size_line, &cub->tex[i].endian)))
+				cub->error = 1;
 		}
 	}
-	if (cub->error)
+	if (cub->error == 1)
 		cub->err_message = ft_strdup("Could not load texture or color.\n");
 }
 

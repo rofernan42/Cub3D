@@ -6,13 +6,13 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/08 14:56:32 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 14:01:15 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	init_cub(t_cub3d *cub)
+static void	init_cub(t_cub3d *cub)
 {
 	cub->act.m_speed = 0.10;
 	cub->act.r_speed = 0.10;
@@ -26,7 +26,7 @@ void	init_cub(t_cub3d *cub)
 	cub->spr.distbuf = malloc(sizeof(int*) * cub->res_x);
 }
 
-void	init_position(t_cub3d *cub)
+static void	init_position(t_cub3d *cub)
 {
 	int x;
 	int y;
@@ -52,7 +52,7 @@ void	init_position(t_cub3d *cub)
 	cub->pos_y = cub->pos_y + 0.5;
 }
 
-void	init_direction(t_cub3d *cub)
+static void	init_direction(t_cub3d *cub)
 {
 	if (cub->map[(int)cub->pos_x][(int)cub->pos_y] == 'N')
 	{
@@ -76,7 +76,7 @@ void	init_direction(t_cub3d *cub)
 	}
 }
 
-void	init_plane(t_cub3d *cub)
+static void	init_plane(t_cub3d *cub)
 {
 	if (cub->map[(int)cub->pos_x][(int)cub->pos_y] == 'N' \
 	|| cub->map[(int)cub->pos_x][(int)cub->pos_y] == 'S')
@@ -93,7 +93,7 @@ void	init_plane(t_cub3d *cub)
 	cub->map[(int)cub->pos_x][(int)cub->pos_y] = '0';
 }
 
-void	init_var(t_cub3d *cub)
+void		init_var(t_cub3d *cub)
 {
 	init_cub(cub);
 	init_position(cub);

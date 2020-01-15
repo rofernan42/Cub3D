@@ -6,78 +6,93 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/08 16:36:46 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/10 19:36:59 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/15 11:27:41 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	convert_bmp(t_cub3d *cub)
+static void	set_header(unsigned char *header, int param)
 {
-	char	*img;
-	int		filesize;
-	int		fd;
+	header[0] = (unsigned char)(param);
+	header[1] = (unsigned char)(param >> 8);
+	header[2] = (unsigned char)(param >> 16);
+	header[3] = (unsigned char)(param >> 24);
+}
 
-	filesize = 54 + 3 * cub->res_x * cub->res_y;
-	img = malloc((sizeof(char) * 3 * cub->res_x * cub->res_y));
-	ft_memset(img, 0, 3 * cub->res_x * cub->res_y);
+static void	init_header(t_cub3d *cub, t_bmp *bmp)
+{
+	int i;
 
-	
-
-
-	unsigned char bmpfileheader[14] = {'B','M', 0,0,0,0, 0,0, 0,0, 54,0,0,0};
-	unsigned char bmpinfoheader[40] = {40,0,0,0, 0,0,0,0, 0,0,0,0, 1,0, 24,0};
-	unsigned char bmppad[3] = {0,0,0};
-
-	bmpfileheader[ 2] = (unsigned char)(filesize);
-	bmpfileheader[ 3] = (unsigned char)(filesize>> 8);
-	bmpfileheader[ 4] = (unsigned char)(filesize>>16);
-	bmpfileheader[ 5] = (unsigned char)(filesize>>24);
-
-	bmpinfoheader[ 4] = (unsigned char)(cub->res_x);
-	bmpinfoheader[ 5] = (unsigned char)(cub->res_x>> 8);
-	bmpinfoheader[ 6] = (unsigned char)(cub->res_x>>16);
-	bmpinfoheader[ 7] = (unsigned char)(cub->res_x>>24);
-	bmpinfoheader[ 8] = (unsigned char)(cub->res_y);
-	bmpinfoheader[ 9] = (unsigned char)(cub->res_y>> 8);
-	bmpinfoheader[10] = (unsigned char)(cub->res_y>>16);
-	bmpinfoheader[11] = (unsigned char)(cub->res_y>>24);
-
-	fd = open("img.bmp", O_WRONLY | O_CREAT | O_TRUNC | O_APPEND);
-	int i = 0;
-	int j;
+	i = 0;
 	while (i < 14)
-		write(fd, &bmpfileheader[i++], 1);
+		bmp->fileheader[i++] = 0;
+	bmp->fileheader[0] = 'B';
+	bmp->fileheader[1] = 'M';
+	bmp->fileheader[10] = 54;
 	i = 0;
 	while (i < 40)
-		write(fd, &bmpinfoheader[i++], 1);
+		bmp->infoheader[i++] = 0;
+	bmp->infoheader[0] = 40;
+	bmp->infoheader[12] = 1;
+	bmp->infoheader[14] = 24;
 	i = 0;
-	
-	int col_img;
-	int color;
+	while (i < 3)
+		bmp->pad[i++] = 0;
+	set_header(&bmp->fileheader[2], bmp->filesize);
+	set_header(&bmp->infoheader[4], cub->res_x);
+	set_header(&bmp->infoheader[8], cub->res_y);
+	write(bmp->fd, bmp->fileheader, 14);
+	write(bmp->fd, bmp->infoheader, 40);
+}
+
+static void	get_color_bmp(t_cub3d *cub, t_bmp *bmp, int j)
+{
+	int i;
 	int x;
 	int y;
+
+	i = 0;
+	while (i < cub->res_x)
+	{
+		x = i;
+		y = cub->res_y - 1 - j;
+		bmp->color = \
+			*(int*)(cub->img_ptr + (cub->res_x * y + x) * cub->bit_pix / 8);
+		write(bmp->fd, &bmp->color, 3);
+		i++;
+	}
+}
+
+static void	draw_bmp(t_cub3d *cub, t_bmp *bmp)
+{
+	int i;
+	int j;
+
+	j = 0;
 	while (j < cub->res_y)
 	{
-		i = 0;
-		while (i < cub->res_x)
-		{
-			x = i;
-			y = cub->res_y - 1 - j;
-			col_img = *(int*)(cub->img_ptr + (cub->res_x * y + x) * cub->bit_pix / 8);
-			color = (col_img & 0xFF0000) | (col_img & 0x00FF00) | (col_img & 0x0000FF);
-			write(fd, &color, 3);
-			i++;
-		}
+		get_color_bmp(cub, bmp, j);
 		i = 0;
 		while (i < (4 - (cub->res_x * 3) % 4) % 4)
 		{
-			write(fd, &bmppad, 1);
+			write(bmp->fd, &bmp->pad, 1);
 			i++;
 		}
 		j++;
 	}
-	printf("test1");
-	free(img);
-	close(fd);
+}
+
+void		convert_bmp(t_cub3d *cub)
+{
+	t_bmp	bmp;
+
+	bmp.filesize = 54 + 3 * cub->res_x * cub->res_y;
+	bmp.img = malloc((sizeof(char) * 3 * cub->res_x * cub->res_y));
+	ft_memset(bmp.img, 0, 3 * cub->res_x * cub->res_y);
+	bmp.fd = open("img.bmp", O_CREAT | O_WRONLY, S_IRWXU);
+	init_header(cub, &bmp);
+	draw_bmp(cub, &bmp);
+	free(bmp.img);
+	close(bmp.fd);
 }
