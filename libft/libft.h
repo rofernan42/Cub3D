@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/09 12:25:58 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 14:41:41 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:05:10 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void			ft_putnbr_fd(int n, int fd);
 int				ft_strcmp(const char *s1, const char *s2);
 void			ft_strdel(char **str);
 char			*ft_strndup(const char *src, size_t n);
-char			*ft_strjoin_free(char const *s1, char const *s2, int param);
+char			*ft_strjoin_free(char *s1, char *s2, int param);
 int				get_next_line(int fd, char **line);
 int				ft_atoi_base(char *str, char *base);
 char			*ft_itoa_base(unsigned int nbr, char *base);

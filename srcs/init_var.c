@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 12:37:12 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 14:01:15 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:37:35 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void		init_var(t_cub3d *cub)
 	init_position(cub);
 	init_direction(cub);
 	init_plane(cub);
+	count_sprites(cub);
 }
 
 /*

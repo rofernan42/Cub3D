@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/15 19:02:41 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:09:42 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	assign_color(t_cub3d *cub, char *line, int ind)
 	color = ft_strjoin_free(rgb[0], rgb[1], 2);
 	color = ft_strjoin_free(color, rgb[2], 2);
 	cub->tex[ind].col = ft_atoi_base(color, "0123456789ABCDEF");
+	ft_strdel(&color);
 }
 
 static void	assign_path_tex(t_cub3d *cub, char *line, int ind)
@@ -98,11 +99,11 @@ void		get_textures(t_cub3d *cub)
 			assign_tex(cub, cub->buf.buffer[i], 2);
 		if (cub->buf.buffer[i][0] == 'W' && cub->buf.buffer[i][1] == 'E')
 			assign_tex(cub, cub->buf.buffer[i], 3);
-		if (cub->buf.buffer[i][0] == 'F')
+		if (cub->buf.buffer[i][0] == 'F' && cub->buf.buffer[i][1] == ' ')
 			assign_tex(cub, cub->buf.buffer[i], 4);
-		if (cub->buf.buffer[i][0] == 'C')
+		if (cub->buf.buffer[i][0] == 'C' && cub->buf.buffer[i][1] == ' ')
 			assign_tex(cub, cub->buf.buffer[i], 5);
-		if (cub->buf.buffer[i][0] == 'S')
+		if (cub->buf.buffer[i][0] == 'S' && cub->buf.buffer[i][1] == ' ')
 			assign_tex(cub, cub->buf.buffer[i], 6);
 		i++;
 	}

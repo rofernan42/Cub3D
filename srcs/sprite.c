@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 13:52:59 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/14 15:56:24 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 15:36:29 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,6 @@ void		sprites(t_cub3d *cub)
 
 	x = 0;
 	ind = 0;
-	count_sprites(cub);
-	cub->c_spr = malloc(sizeof(*cub->c_spr) * cub->spr.nb_sprite);
-	cub->spr.sp_order = malloc(sizeof(int) * cub->spr.nb_sprite);
-	cub->spr.sp_dist = malloc(sizeof(double) * cub->spr.nb_sprite);
 	while (x < cub->map_h)
 	{
 		y = 0;

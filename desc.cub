@@ -1,15 +1,16 @@
-R 1000 600
+R 1000 700
 
-SO textures/stone.xpm
-NO textures/mossy.xpm
-EA textures/wood.xpm
-WE textures/redbrick.xpm
+SO textures/greybrick.xpm
+NO textures/flowers.xpm
+EA textures/whitebrick.xpm
+WE textures/geomtile.xpm
 
 S textures/vase.xpm
 
 
-C textures/sky.xpm
-F textures/diamond.xpm
+C      textures/sky.xpm    
+
+F textures/whitetile.xpm
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 W 0 1

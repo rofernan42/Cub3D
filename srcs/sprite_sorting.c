@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/03 15:25:43 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/03 16:02:22 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 16:43:37 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void		count_sprites(t_cub3d *cub)
 		}
 		x++;
 	}
+	cub->c_spr = malloc(sizeof(*cub->c_spr) * cub->spr.nb_sprite);
+	cub->spr.sp_order = malloc(sizeof(int) * cub->spr.nb_sprite);
+	cub->spr.sp_dist = malloc(sizeof(double) * cub->spr.nb_sprite);
 }
 
 void		create_sorting(t_cub3d *cub)

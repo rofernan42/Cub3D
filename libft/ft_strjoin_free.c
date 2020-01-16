@@ -6,13 +6,13 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/20 14:38:20 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/20 14:39:45 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/16 12:04:42 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin_free(char const *s1, char const *s2, int param)
+char	*ft_strjoin_free(char *s1, char *s2, int param)
 {
 	int		i;
 	int		j;
@@ -30,13 +30,13 @@ char	*ft_strjoin_free(char const *s1, char const *s2, int param)
 		dest[i++] = s2[j++];
 	dest[i] = '\0';
 	if (param == 0)
-		free((char *)s2);
+		ft_strdel(&s2);
 	if (param == 1)
-		free((char *)s1);
+		ft_strdel(&s1);
 	if (param == 2)
 	{
-		free((char *)s1);
-		free((char *)s2);
+		ft_strdel(&s1);
+		ft_strdel(&s2);
 	}
 	return (dest);
 }
