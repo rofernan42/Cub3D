@@ -1,14 +1,14 @@
 R 1000 700
 
 SO textures/greybrick.xpm
-NO textures/flowers.xpm
-EA textures/whitebrick.xpm
-WE textures/geomtile.xpm
+NO textures/greybrick.xpm
+EA textures/greybrick.xpm
+WE textures/greybrick.xpm
 
-S textures/vase.xpm
+S textures/vase2.xpm
 
 
-C      textures/sky.xpm    
+C textures/sky2.xpm    
 
 F textures/whitetile.xpm
 
