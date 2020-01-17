@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:03:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/16 10:44:00 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:17:34 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ void	assign_res(t_cub3d *cub)
 		cub->res_x = 2560;
 	if (cub->res_y > 1440)
 		cub->res_y = 1440;
-	if (cub->res_x == 0 || cub->res_y == 0)
+	if (cub->res_x <= 0 || cub->res_y <= 0)
 		display_error(cub, "Resolution not valid.\n");
 }
