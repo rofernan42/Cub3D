@@ -6,7 +6,7 @@
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 15:44:33 by rofernan          #+#    #+#              #
-#    Updated: 2020/01/16 18:14:06 by rofernan         ###   ########.fr        #
+#    Updated: 2020/01/17 10:06:27 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,22 +49,22 @@ CC					=	gcc
 
 CFLAGS				=	-Wall -Wextra -Werror -I./
 MLX					=	-lmlx -framework OpenGL -framework AppKit
-LIB					=	./Libft/libft.a
+LIB					=	./libft/libft.a
 
 all:					$(NAME)
 
 $(NAME):				
-						@(make -C ./Libft/)
+						@(make -C ./libft/)
 						@($(CC) $(CFLAGS) $(MLX) $(LIB) $(SRCS) -o $(NAME))
 						@(echo "\033[32m=== COMPILATION CUB3D OK ===\033[0m")
 
 clean:
-						@(make clean -C ./Libft/)
+						@(make clean -C ./libft/)
 
 fclean:
 						@(rm -rf $(NAME))
 						@echo "\033[34m=== REPERTORY CUB3D CLEANED ===\033[0m"
-						@(make fclean -C ./Libft/)
+						@(make fclean -C ./libft/)
 
 re:						fclean all
 

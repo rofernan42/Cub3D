@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/16 14:04:25 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/17 10:07:01 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <math.h>
-# include "Libft/libft.h"
+# include "libft/libft.h"
 
 # define KEY_A 0
 # define KEY_S 1
