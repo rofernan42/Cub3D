@@ -6,11 +6,11 @@
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 15:44:33 by rofernan          #+#    #+#              #
-#    Updated: 2020/01/17 10:06:27 by rofernan         ###   ########.fr        #
+#    Updated: 2020/01/20 15:31:31 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 				=	cub3d
+NAME 				=	cub3D
 
 SRCS_PATH			=	./srcs
 INC_PATH			=	./includes
