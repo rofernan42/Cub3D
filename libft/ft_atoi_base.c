@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/08 11:54:30 by rofernan          #+#    #+#             */
-/*   Updated: 2019/11/26 18:01:10 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/21 12:26:58 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,9 +82,11 @@ int				ft_atoi_base(char *str, char *base)
 {
 	int		i;
 	int		nb;
+	int		size_base;
 
 	i = 0;
 	nb = 0;
+	size_base = (int)ft_strlen(base);
 	if (!check_base(base))
 		return (0);
 	while (check_whitespace(str[i]) || str[i] == '-' || str[i] == '+')
@@ -92,7 +94,7 @@ int				ft_atoi_base(char *str, char *base)
 	while (str[i])
 	{
 		if (compare_base(str[i], base) != -1)
-			nb = nb * ft_strlen(base) + compare_base(str[i], base);
+			nb = nb * size_base + compare_base(str[i], base);
 		else
 			return (sign_number(str) * nb);
 		i++;

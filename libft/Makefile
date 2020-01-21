@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/08/15 12:07:06 by juligonz          #+#    #+#              #
-#    Updated: 2020/01/16 18:13:19 by rofernan         ###   ########.fr        #
+#    Created: 2019/08/15 12:07:06 by rofernan          #+#    #+#              #
+#    Updated: 2020/01/21 12:42:25 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,7 @@ $(OBJS_PATH)/%.o:		./%.c
 
 clean:
 						rm -rf $(OBJS) $(OBJS_BONUS)
-						@echo "\033[34m=== ./OBJS/ CLEANED ===\033[0m"
+						@echo "\033[34m=== REPERTORY ./OBJS/ CLEANED ===\033[0m"
 
 fclean:					clean
 						rm -rf ./objs $(NAME)
