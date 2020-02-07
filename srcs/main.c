@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 10:38:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/20 13:33:44 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/01/22 16:58:59 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,20 +66,3 @@ int			main(int argc, char **argv)
 		ft_putstr_fd("Please select descriptor file.\n", 1);
 	return (0);
 }
-
-/*
-** printf("%d   %d", cub.res_x, cub.res_y);
-** int i = 0;
-** while (cub.buf.buffer[i])
-** {
-** 	printf("%s\n", cub.buf.buffer[i]);
-** 	i++;
-** }
-** printf("%s\n", cub.buf.buffer[i]);
-** int x = 0;
-** while (x < cub.map_h)
-** {
-** 	printf("%s\n", cub.map[x]);
-** 	x++;
-** }
-*/

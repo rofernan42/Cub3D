@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/01/15 12:07:22 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/16 16:40:15 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:26:34 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,31 @@ static void	set_buffer(int fd, t_cub3d *cub)
 	cub->buf.content = ft_strjoin_free(cub->buf.content, line, 2);
 }
 
+static int	check_type(char *desc_file)
+{
+	int i;
+	int ind;
+
+	i = 0;
+	ind = 0;
+	while (desc_file[i])
+	{
+		if (desc_file[i] == '.')
+			ind = i;
+		i++;
+	}
+	if (!ft_strcmp(&desc_file[ind], ".cub"))
+		return (1);
+	return (0);
+}
+
 void		init_desc(t_cub3d *cub, char *desc)
 {
 	int		fd;
 
 	init(cub);
+	if (!check_type(desc))
+		display_error(cub, "Description file must be *.cub type.\n");
 	if ((fd = open(desc, O_RDONLY)) < 0)
 	{
 		close(fd);
