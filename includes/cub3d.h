@@ -6,7 +6,7 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 11:08:32 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/17 10:07:01 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/02/07 14:34:59 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,6 +212,11 @@ void				complete_map(t_cub3d *cub);
 ** CHECK_MAP.C
 */
 void				check_map(t_cub3d *cub);
+
+/*
+** COLORS.C
+*/
+void				assign_color(t_cub3d *cub, char *line, int ind);
 
 /*
 ** TEXTURES.C

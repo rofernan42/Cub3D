@@ -6,7 +6,7 @@
 #    By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/11/12 15:44:33 by rofernan          #+#    #+#              #
-#    Updated: 2020/01/20 15:31:31 by rofernan         ###   ########.fr        #
+#    Updated: 2020/02/07 15:08:34 by rofernan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS_NAME			=	actions.c			\
 						bmp.c				\
 						check_content.c		\
 						check_map.c			\
+						colors.c			\
 						create_map.c		\
 						draw_ceil_floor.c	\
 						draw_walls.c		\

@@ -6,47 +6,11 @@
 /*   By: rofernan <rofernan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/06 20:17:11 by rofernan          #+#    #+#             */
-/*   Updated: 2020/01/16 16:09:42 by rofernan         ###   ########.fr       */
+/*   Updated: 2020/02/07 15:09:57 by rofernan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-static void	assign_rgb(int temp, char **rgb)
-{
-	temp = (temp < 0 ? 0 : temp);
-	temp = (temp > 255 ? 255 : temp);
-	*rgb = ft_itoa_base(temp, "0123456789ABCDEF");
-	if (temp < 16)
-		*rgb = ft_strjoin_free("0", *rgb, 0);
-}
-
-static void	assign_color(t_cub3d *cub, char *line, int ind)
-{
-	int		i;
-	int		count;
-	char	*rgb[3];
-	char	*color;
-	int		temp;
-
-	i = 0;
-	count = 0;
-	while (count < 3)
-	{
-		temp = ft_atoi(&line[i]);
-		assign_rgb(temp, &rgb[count]);
-		while (line[i] && line[i] != ',')
-			i++;
-		if (count < 2 && i == (int)ft_strlen(line))
-			display_error(cub, "Could not load color.\n");
-		i++;
-		count++;
-	}
-	color = ft_strjoin_free(rgb[0], rgb[1], 2);
-	color = ft_strjoin_free(color, rgb[2], 2);
-	cub->tex[ind].col = ft_atoi_base(color, "0123456789ABCDEF");
-	ft_strdel(&color);
-}
 
 static void	assign_path_tex(t_cub3d *cub, char *line, int ind)
 {

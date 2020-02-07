@@ -1,23 +1,22 @@
 R 1000 700
 
 SO textures/greybrick.xpm
-NO textures/greybrick.xpm
+NO textures/geomtile.xpm
 EA textures/greybrick.xpm
-WE textures/greybrick.xpm
+WE textures/whitebrick.xpm
 
-S textures/vase2.xpm
+S textures/vase.xpm
 
+C 82,200,250
 
-C textures/sky2.xpm    
-
-F textures/whitetile.xpm
+F 34,62,74
 
 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
 1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 1 0 1 1 0 0 0 0 0 1 1 1 0 0 0 2 2 2 0 0 0 0 0 0 1 0 0 0 1
-1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1
+1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 W 0 0 1 0 0 0 1
 1 0 1 1 0 0 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1
-1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 N 1 1 1 0 1 1 1 1 0 0 0 1
+1 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 1 1 1 0 1 1 1 1 0 0 0 1
 1 1 1 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1 0 0 0 0 0 0 1 0 0 0 1
 1 1 1 1 0 1 1 1 1 1 1 1 1 1 0 1 1 1 0 1 0 1 0 0 1 0 0 0 1
 1 1 2 0 0 0 0 0 1 1 0 1 0 1 0 1 1 1 0 0 0 0 0 0 1 0 0 0 1
