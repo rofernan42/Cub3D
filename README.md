@@ -1,4 +1,4 @@
-# cub3D
+# cub3D (42 project)
 ## Summary
 This project is inspired by the world-famous 90’s game Wolfenstein 3D, which
 was the first FPS ever. It uses the technique of ray-casting. The goal of this project is to
